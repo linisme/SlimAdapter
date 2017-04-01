@@ -1,4 +1,4 @@
-package net.idik.lib.slimadapter;
+package net.idik.lib.slimadapter.example;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

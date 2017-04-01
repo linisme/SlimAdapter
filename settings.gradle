@@ -1,1 +1,1 @@
-include ':app', ':slimadapterlib', ':slimadapterlib-kotlin'
+include ':app', ':slimadapterlib'

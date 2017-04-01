@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
  * Created by linshuaibin on 22/12/2016.
  */
 
-public abstract class AbstractSlimAdapter extends RecyclerView.Adapter<SlimViewHolder> {
+abstract class AbstractSlimAdapter extends RecyclerView.Adapter<SlimViewHolder> {
 
     @Override
     public final void onBindViewHolder(SlimViewHolder holder, int position) {

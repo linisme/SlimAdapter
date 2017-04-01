@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
-import net.idik.lib.slimadapter.viewinjector.SlimAdapterDefaultViewInjector;
+import net.idik.lib.slimadapter.viewinjector.DefaultViewInjector;
 
 
 /**
@@ -31,7 +31,7 @@ public abstract class SlimViewHolder<D> extends RecyclerView.ViewHolder {
 
     final void bind(D data) {
         if (injector == null) {
-            injector = new SlimAdapterDefaultViewInjector(this);
+            injector = new DefaultViewInjector(this);
         }
         onBind(data, injector);
     }

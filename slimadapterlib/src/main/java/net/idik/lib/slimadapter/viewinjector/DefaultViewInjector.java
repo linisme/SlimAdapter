@@ -11,84 +11,82 @@ import android.widget.Checkable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import net.idik.lib.slimadapter.SlimViewHolder;
+
+
 /**
- * Created by linshuaibin on 29/12/2016.
+ * Created by linshuaibin on 22/12/2016.
  */
+public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
 
-public class SlimViewInjector implements IViewInjector<SlimViewInjector> {
+    private SlimViewHolder viewHolder;
 
-    private View root;
-
-    private SlimViewInjector(View root) {
-        this.root = root;
-    }
-
-    public static SlimViewInjector create(View root) {
-        return new SlimViewInjector(root);
+    public DefaultViewInjector(SlimViewHolder viewHolder) {
+        this.viewHolder = viewHolder;
     }
 
     @Override
-    public <T extends View> T findViewById(int id) {
-        return (T) root.findViewById(id);
+    public final <T extends View> T findViewById(int id) {
+        return (T) viewHolder.id(id);
     }
 
     @Override
-    public SlimViewInjector tag(int id, Object object) {
+    public DefaultViewInjector tag(int id, Object object) {
         findViewById(id).setTag(object);
         return this;
     }
 
     @Override
-    public SlimViewInjector text(int id, int res) {
+    public DefaultViewInjector text(int id, int res) {
         TextView view = findViewById(id);
         view.setText(res);
         return this;
     }
 
     @Override
-    public SlimViewInjector text(int id, CharSequence charSequence) {
+    public DefaultViewInjector text(int id, CharSequence charSequence) {
         TextView view = findViewById(id);
         view.setText(charSequence);
         return this;
     }
 
     @Override
-    public SlimViewInjector textColor(int id, int color) {
+    public DefaultViewInjector textColor(int id, int color) {
         TextView view = findViewById(id);
         view.setTextColor(color);
         return this;
     }
 
     @Override
-    public SlimViewInjector textSize(int id, int sp) {
+    public DefaultViewInjector textSize(int id, int sp) {
         TextView view = findViewById(id);
         view.setTextSize(TypedValue.COMPLEX_UNIT_SP, sp);
         return this;
     }
 
     @Override
-    public SlimViewInjector image(int id, int res) {
+    public DefaultViewInjector image(int id, int res) {
         ImageView view = findViewById(id);
         view.setImageResource(res);
         return this;
     }
 
     @Override
-    public SlimViewInjector image(int id, Drawable drawable) {
+    public DefaultViewInjector image(int id, Drawable drawable) {
         ImageView view = findViewById(id);
         view.setImageDrawable(drawable);
         return this;
     }
 
     @Override
-    public SlimViewInjector background(int id, int res) {
+    public DefaultViewInjector background(int id, int res) {
         View view = findViewById(id);
         view.setBackgroundResource(res);
         return this;
     }
 
     @Override
-    public SlimViewInjector background(int id, Drawable drawable) {
+    public DefaultViewInjector background(int id, Drawable drawable) {
         View view = findViewById(id);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             view.setBackground(drawable);
@@ -99,78 +97,80 @@ public class SlimViewInjector implements IViewInjector<SlimViewInjector> {
     }
 
     @Override
-    public SlimViewInjector visible(int id) {
+    public DefaultViewInjector visible(int id) {
         findViewById(id).setVisibility(View.VISIBLE);
         return this;
     }
 
     @Override
-    public SlimViewInjector invisible(int id) {
+    public DefaultViewInjector invisible(int id) {
         findViewById(id).setVisibility(View.INVISIBLE);
         return this;
     }
 
     @Override
-    public SlimViewInjector gone(int id) {
+    public DefaultViewInjector gone(int id) {
         findViewById(id).setVisibility(View.GONE);
         return this;
     }
 
     @Override
-    public <V extends View> SlimViewInjector with(int id, Action<V> action) {
+    public <V extends View> DefaultViewInjector with(int id, Action<V> action) {
         action.action((V) findViewById(id));
         return this;
     }
 
     @Override
-    public SlimViewInjector clicked(int id, View.OnClickListener listener) {
+    public DefaultViewInjector clicked(int id, View.OnClickListener listener) {
         findViewById(id).setOnClickListener(listener);
         return this;
     }
 
     @Override
-    public SlimViewInjector longClicked(int id, View.OnLongClickListener listener) {
+    public DefaultViewInjector longClicked(int id, View.OnLongClickListener listener) {
         findViewById(id).setOnLongClickListener(listener);
         return this;
     }
 
     @Override
-    public SlimViewInjector enable(int id) {
+    public DefaultViewInjector enable(int id) {
         findViewById(id).setEnabled(true);
         return this;
     }
 
     @Override
-    public SlimViewInjector disable(int id) {
+    public DefaultViewInjector disable(int id) {
         findViewById(id).setEnabled(false);
         return this;
     }
 
     @Override
-    public SlimViewInjector checked(int id, boolean checked) {
-        Checkable checkable = findViewById(id);
-        checkable.setChecked(checked);
+    public DefaultViewInjector checked(int id, boolean checked) {
+        Checkable view = findViewById(id);
+        view.setChecked(checked);
         return this;
     }
 
     @Override
-    public SlimViewInjector adapter(int id, RecyclerView.Adapter adapter) {
+    public DefaultViewInjector adapter(int id, RecyclerView.Adapter adapter) {
         RecyclerView view = findViewById(id);
         view.setAdapter(adapter);
         return this;
     }
 
     @Override
-    public SlimViewInjector adapter(int id, Adapter adapter) {
+    public DefaultViewInjector adapter(int id, Adapter adapter) {
         AdapterView view = findViewById(id);
         view.setAdapter(adapter);
         return this;
     }
 
     @Override
-    public SlimViewInjector layoutManager(int id, RecyclerView.LayoutManager layoutManager) {
+    public DefaultViewInjector layoutManager(int id, RecyclerView.LayoutManager layoutManager) {
         RecyclerView view = findViewById(id);
         view.setLayoutManager(layoutManager);
         return this;
     }
+
+
 }

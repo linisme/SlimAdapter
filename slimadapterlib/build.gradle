@@ -29,17 +29,17 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
     pkg {
-        repo = 'slimApdater'//自己bintray创建仓库名字
-        name = 'SlimAdapter'//Library的名字
-//        websiteUrl = siteUrl
-//        vcsUrl = gitUrl
+        repo = 'slimApdater'
+        name = 'SlimAdapter'
+        websiteUrl = "https://github.com/MEiDIK/SlimAdapter"
+        vcsUrl = "https://github.com/MEiDIK/SlimAdapter.git"
         licenses = ['MIT']
         userOrg = 'iDIK'
         publish = true
 
         version {
             name = "1.0"
-            desc = ''
+            desc = 'A slim & clean & typeable Adapter withoooooooout# VIEWHOLDER'
             released = new Date()
             vcsTag = 'v1.0'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']

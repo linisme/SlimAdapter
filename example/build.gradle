@@ -26,7 +26,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile project(':slimadapterlib')
+    compile project(':slimadapter')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     testCompile 'junit:junit:4.12'

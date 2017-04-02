@@ -1,0 +1,121 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+group = 'net.idik.lib'
+version = '1.0'
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def siteUrl = 'https://github.com/MEiDIK/SlimAdapter'
+def gitUrl = 'https://github.com/MEiDIK/SlimAdapter.git'
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    pkg {
+        repo = 'SlimAdapter'
+        name = 'SlimAdapter'
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ['MIT']
+        userOrg = 'idik'
+        publish = true
+
+        version {
+            name = "1.0"
+            desc = 'A slim & clean & typeable Adapter withoooooooout# VIEWHOLDER'
+            released = new Date()
+            vcsTag = 'v1.0'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
+    }
+    configurations = ['archives']
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+}
+repositories {
+    mavenCentral()
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                name 'SlimAdapter'
+                description 'A slim & clean & typeable Adapter withoooooooout # VIEWHOLDER'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'https://github.com/MEiDIK/SlimAdapter/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'MEiDIK'
+                        name 'idik'
+                        email 'me@idik.net'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}

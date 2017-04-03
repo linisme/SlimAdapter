@@ -1,5 +1,6 @@
 package net.idik.lib.slimadapter.example;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,10 +25,11 @@ public class MainActivity extends AppCompatActivity {
     static {
         data.add("hello");
         data.add(",");
-        data.add(666666);
+        data.add(new User("iDIK", 27));
         data.add("world");
         data.add("!");
         data.add(666666);
+        data.add(34234);
         data.add(666669L);
     }
 
@@ -38,6 +40,28 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         SlimAdapter.create()
+                .with(R.layout.item_user, new SlimInjector<User>() {
+                    @Override
+                    protected void onInject(User data, IViewInjector injector) {
+                        injector.text(R.id.name, data.getName())
+                                .text(R.id.age, String.valueOf(data.getAge()))
+                                .textColor(R.id.age, Color.RED)
+                                .textSize(R.id.age, 8);
+                    }
+                })
+                .with(R.layout.item_interger, new SlimInjector<Integer>() {
+                    @Override
+                    protected void onInject(Integer data, IViewInjector injector) {
+                        injector.text(R.id.text, data.toString());
+
+                    }
+                })
+                .with(R.layout.item_string, new SlimInjector<String>() {
+                    @Override
+                    protected void onInject(String data, IViewInjector injector) {
+                        injector.text(R.id.text, data);
+                    }
+                })
                 .withDefault(R.layout.item_string, new SlimInjector() {
                     @Override
                     protected void onInject(Object data, IViewInjector injector) {
@@ -49,25 +73,6 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
 
-                    }
-                })
-                .with(R.layout.item_interger, new SlimInjector<Integer>() {
-                    @Override
-                    protected void onInject(Integer data, IViewInjector injector) {
-                        injector.text(R.id.text, data.toString());
-
-                    }
-                })
-                .with(R.layout.item_interger, new SlimInjector<String>() {
-                    @Override
-                    protected void onInject(String data, IViewInjector injector) {
-                        injector.text(R.id.text, data);
-                    }
-                })
-                .with(R.layout.item_string, new SlimInjector<CharSequence>() {
-                    @Override
-                    protected void onInject(CharSequence data, IViewInjector injector) {
-                        injector.text(R.id.text, data);
                     }
                 })
                 .attachTo(recyclerView)

@@ -12,7 +12,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 
 group = 'net.idik'
-version = '1.0'
+version = '1.0.0'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,10 +47,10 @@ bintray {
         publish = true
 
         version {
-            name = "1.0"
+            name = "1.0.0"
             desc = 'A slim & clean & typeable Adapter withoooooooout# VIEWHOLDER'
             released = new Date()
-            vcsTag = 'v1.0'
+            vcsTag = 'v1.0.0'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }

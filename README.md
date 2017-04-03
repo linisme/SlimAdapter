@@ -18,8 +18,53 @@ compile 'net.idik:slimadapter:1.0.0'
 ```
 
 # Usages
+```java        
+
+SlimAdapter.create()
+                .with(R.layout.item_user, new SlimInjector<User>() {
+                    @Override
+                    protected void onInject(User data, IViewInjector injector) {
+                        injector.text(R.id.name, data.getName())
+                                .text(R.id.age, String.valueOf(data.getAge()))
+                                .textColor(R.id.age, Color.RED)
+                                .textSize(R.id.age, 8);
+                    }
+                })
+                .with(R.layout.item_interger, new SlimInjector<Integer>() {
+                    @Override
+                    protected void onInject(Integer data, IViewInjector injector) {
+                        injector.text(R.id.text, data.toString());
+
+                    }
+                })
+                .with(R.layout.item_string, new SlimInjector<String>() {
+                    @Override
+                    protected void onInject(String data, IViewInjector injector) {
+                        injector.text(R.id.text, data);
+                    }
+                })
+                .withDefault(R.layout.item_string, new SlimInjector() {
+                    @Override
+                    protected void onInject(Object data, IViewInjector injector) {
+                        injector.text(R.id.text, data.toString())
+                                .clicked(R.id.text, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Toast.makeText(MainActivity.this, "DEFAULT INJECT", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+                    }
+                })
+                .attachTo(recyclerView)
+                .setData(data)
+                .notifyDataSetChanged();
+    }
+    
+```
 
 
+--------------
 
 <a href='https://bintray.com/idik-net/SlimAdapter/SlimAdapter?source=watch' alt='Get automatic notifications about new "SlimAdapter" versions'><img src='https://www.bintray.com/docs/images/bintray_badge_color.png'></a>
 

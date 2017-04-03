@@ -43,7 +43,7 @@ bintray {
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ['MIT']
-        userOrg = 'idik'
+        userOrg = 'idik-net'
         publish = true
 
         version {
@@ -86,8 +86,8 @@ install {
                 }
                 developers {
                     developer {
-                        id 'MEiDIK'
-                        name 'idik'
+                        id 'iDIK'
+                        name 'iDIK'
                         email 'me@idik.net'
                     }
                 }

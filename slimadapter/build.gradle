@@ -1,6 +1,8 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
+    id "com.github.dcendents.android-maven" version "1.5"
+}
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 25
@@ -23,7 +25,7 @@ android {
     }
 }
 
-group = 'net.idik.lib'
+group = 'net.idik'
 version = '1.0'
 
 Properties properties = new Properties()
@@ -105,7 +107,7 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    failOnError false
+//    failOnError false
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }

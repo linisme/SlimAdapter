@@ -85,6 +85,7 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
         return this;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public DefaultViewInjector background(int id, Drawable drawable) {
         View view = findViewById(id);

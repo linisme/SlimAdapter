@@ -1,3 +1,5 @@
+![logo](./slimadapter-logo.png)
+
 
 [ ![Download](https://api.bintray.com/packages/idik-net/SlimAdapter/SlimAdapter/images/download.svg) ](https://bintray.com/idik-net/SlimAdapter/SlimAdapter/_latestVersion)
 

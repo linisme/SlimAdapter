@@ -10,7 +10,7 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 
 
 
-
+# Setup
 ```java
 compile 'net.idik:slimadapter:1.0'
 ```

@@ -15,7 +15,7 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 compile 'net.idik:slimadapter:1.0'
 ```
 
-# LICENSE
+# License
 
     MIT License
 

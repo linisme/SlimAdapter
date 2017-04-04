@@ -25,7 +25,7 @@ compile 'net.idik:slimadapter:1.1.0'
 
 #### Step 1: Create SlimAdapter & attachTo target RecyclerView
 
-* use methed with(layoutRes, SlimInjector<DataType>)
+* use methed with(layoutRes, SlimInjector\<DataType\>)
  
 * use methed withDefault(layoutRes, SlimInjector)
 

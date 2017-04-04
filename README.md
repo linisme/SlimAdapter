@@ -65,12 +65,19 @@ injector.text(R.id.name, data.getName())
         .longClicked(R.id.name, new View.OnLongClickListener() {
                                     @Override
                                     public boolean onLongClick(View v) {
+                                        //do stuff...
                                         return false;
                                     }
                                 })
         .clicked(R.id.text, new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+                                        //do stuff...
+                                    }
+                                })
+        .with(R.id.name, new IViewInjector.Action<TextView>() {
+                                    @Override
+                                    public void action(TextView view) {
                                         //do stuff...
                                     }
                                 })

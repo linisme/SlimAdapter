@@ -23,11 +23,11 @@ compile 'net.idik:slimadapter:1.1.0'
 
 ## Java
 
-1. Create SlimAdapter & attachTo target RecyclerView
+#### Step 1: Create SlimAdapter & attachTo target RecyclerView
 
-    * use methed with(layoutRes, SlimInjector<DataType>)
+* use methed with(layoutRes, SlimInjector<DataType>)
  
-    * use methed withDefault(layoutRes, SlimInjector)
+* use methed withDefault(layoutRes, SlimInjector)
 
 ```java        
 
@@ -62,7 +62,7 @@ compile 'net.idik:slimadapter:1.1.0'
 ```
 
 
-1. Inject data into views with fluent apis
+#### Step 2: Inject data into views with fluent apis
 
 ```java
 injector.text(R.id.name, data.getName())
@@ -91,7 +91,7 @@ injector.text(R.id.name, data.getName())
         ...;
 ```
 
-1. use SlimAdapter as normal adapter
+#### Step 3: use SlimAdapter as normal adapter
 
 
 ## SlimAdapter 💗 Kotlim

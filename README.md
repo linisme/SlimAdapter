@@ -91,7 +91,25 @@ injector.text(R.id.name, data.getName())
         ...;
 ```
 
-#### Step 3: use SlimAdapter as normal adapter
+#### Step 3: Use SlimAdapter as normal adapter
+
+```Java
+    List<Object> data = new ArrayList<>();
+
+    {
+        data.add("hello");
+        data.add(",");
+        data.add(new User("iDIK", 27));
+        data.add("world");
+        data.add("!");
+        data.add(666666);
+        data.add(34234);
+        data.add(666669L);
+    }
+    
+    slimAdapter.setData(data).notifyDataSetChanged();
+    
+```
 
 
 ## SlimAdapter 💗 Kotlim

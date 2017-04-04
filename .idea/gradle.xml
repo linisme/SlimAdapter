@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/example" />
+            <option value="$PROJECT_DIR$/exampleforkotlin" />
             <option value="$PROJECT_DIR$/slimadapter" />
           </set>
         </option>

@@ -73,14 +73,14 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return new SlimAdapter();
     }
 
-    public <T> SlimAdapter withDefault(final int layoutRes, final SlimInjector slimInjector) {
-        defaultCreator = new IViewHolderCreator<T>() {
+    public SlimAdapter withDefault(final int layoutRes, final SlimInjector slimInjector) {
+        defaultCreator = new IViewHolderCreator() {
             @Override
-            public SlimTypeViewHolder<T> create(ViewGroup parent) {
-                return new SlimTypeViewHolder<T>(parent, layoutRes) {
+            public SlimTypeViewHolder create(ViewGroup parent) {
+                return new SlimTypeViewHolder(parent, layoutRes) {
                     @Override
-                    protected void onBind(T data, IViewInjector injector) {
-                        slimInjector.inject(data, injector);
+                    protected void onBind(Object data, IViewInjector injector) {
+                        slimInjector.onInject(data, injector);
 
                     }
                 };
@@ -90,14 +90,14 @@ public class SlimAdapter extends AbstractSlimAdapter {
     }
 
     public <T> SlimAdapter with(final int layoutRes, final SlimInjector<T> slimInjector) {
-        Type type = ((ParameterizedType) slimInjector.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        Type type = ((ParameterizedType) slimInjector.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0];
         creators.put(type, new IViewHolderCreator<T>() {
             @Override
             public SlimTypeViewHolder<T> create(ViewGroup parent) {
                 return new SlimTypeViewHolder<T>(parent, layoutRes) {
                     @Override
                     protected void onBind(T data, IViewInjector injector) {
-                        slimInjector.inject(data, injector);
+                        slimInjector.onInject(data, injector);
                     }
                 };
             }

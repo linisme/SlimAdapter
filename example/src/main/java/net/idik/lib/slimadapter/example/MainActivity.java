@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         SlimAdapter.create()
                 .with(R.layout.item_user, new SlimInjector<User>() {
                     @Override
-                    protected void onInject(User data, IViewInjector injector) {
+                    public void onInject(User data, IViewInjector injector) {
                         injector.text(R.id.name, data.getName())
                                 .text(R.id.age, String.valueOf(data.getAge()))
                                 .textColor(R.id.age, Color.RED)
@@ -51,20 +51,20 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .with(R.layout.item_interger, new SlimInjector<Integer>() {
                     @Override
-                    protected void onInject(Integer data, IViewInjector injector) {
+                    public void onInject(Integer data, IViewInjector injector) {
                         injector.text(R.id.text, data.toString());
 
                     }
                 })
                 .with(R.layout.item_string, new SlimInjector<String>() {
                     @Override
-                    protected void onInject(String data, IViewInjector injector) {
+                    public void onInject(String data, IViewInjector injector) {
                         injector.text(R.id.text, data);
                     }
                 })
                 .withDefault(R.layout.item_string, new SlimInjector() {
                     @Override
-                    protected void onInject(Object data, IViewInjector injector) {
+                    public void onInject(Object data, IViewInjector injector) {
                         injector.text(R.id.text, data.toString())
                                 .clicked(R.id.text, new View.OnClickListener() {
                                     @Override

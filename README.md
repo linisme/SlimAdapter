@@ -55,6 +55,29 @@ compile 'net.idik:slimadapter:1.1.0'
 ```
 
 
+### Inject data into views with fluent apis
+
+```java
+injector.text(R.id.name, data.getName())
+        .text(R.id.age, String.valueOf(data.getAge()))
+        .textColor(R.id.age, Color.RED)
+        .textSize(R.id.age, 8)
+        .longClicked(R.id.name, new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        return false;
+                                    }
+                                })
+        .clicked(R.id.text, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //do stuff...
+                                    }
+                                })
+        ...;
+```
+
+
 ## SlimAdapter 💗 Kotlim
 
 ```Kotlin

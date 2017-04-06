@@ -2,6 +2,10 @@
 
 
 [ ![Download](https://api.bintray.com/packages/idik-net/SlimAdapter/SlimAdapter/images/download.svg) ](https://bintray.com/idik-net/SlimAdapter/SlimAdapter/_latestVersion)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/MEiDIK/SlimAdapter/master/LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
+
+
 
 
 

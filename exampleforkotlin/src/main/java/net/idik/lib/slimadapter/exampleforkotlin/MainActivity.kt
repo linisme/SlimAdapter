@@ -19,24 +19,24 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter by lazy {
         SlimAdapter.create()
-                .with<String>(R.layout.item_string) { data, injector ->
+                .register<String>(R.layout.item_string) { data, injector ->
                     injector.text(R.id.text, data)
                 }
-                .with<User>(R.layout.item_user) { data, injector ->
+                .register<User>(R.layout.item_user) { data, injector ->
                     injector.text(R.id.name, data.name)
                             .text(R.id.age, data.age.toString())
                             .clicked(R.id.name) {
                                 Toast.makeText(this@MainActivity, "click user name", Toast.LENGTH_LONG).show()
                             }
                 }
-                .with<Int>(R.layout.item_interger) { data, injector ->
+                .register<Int>(R.layout.item_interger) { data, injector ->
                     injector.text(R.id.text, data.toString())
                             .longClicked(R.id.text) {
                                 Toast.makeText(this@MainActivity, "longclick int", Toast.LENGTH_LONG).show()
                                 true
                             }
                 }
-                .withDefault(R.layout.item_string) { data, injector ->
+                .registerDefault(R.layout.item_string) { data, injector ->
                     injector.text(R.id.text, data.toString())
                             .clicked(R.id.text) {
                                 Toast.makeText(this@MainActivity, "click default", Toast.LENGTH_LONG).show()

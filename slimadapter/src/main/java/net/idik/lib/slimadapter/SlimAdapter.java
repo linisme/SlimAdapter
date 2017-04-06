@@ -73,7 +73,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return new SlimAdapter();
     }
 
-    public SlimAdapter withDefault(final int layoutRes, final SlimInjector slimInjector) {
+    public SlimAdapter registerDefault(final int layoutRes, final SlimInjector slimInjector) {
         defaultCreator = new IViewHolderCreator() {
             @Override
             public SlimTypeViewHolder create(ViewGroup parent) {
@@ -89,7 +89,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return this;
     }
 
-    public <T> SlimAdapter with(final int layoutRes, final SlimInjector<T> slimInjector) {
+    public <T> SlimAdapter register(final int layoutRes, final SlimInjector<T> slimInjector) {
         Type type = ((ParameterizedType) slimInjector.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0];
         creators.put(type, new IViewHolderCreator<T>() {
             @Override

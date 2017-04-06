@@ -16,7 +16,7 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:1.1.0'
+compile 'net.idik:slimadapter:1.2.0'
 ```
 
 # Usages
@@ -25,32 +25,36 @@ compile 'net.idik:slimadapter:1.1.0'
 
 #### Step 1: Create SlimAdapter & attachTo target RecyclerView
 
-* use methed with(layoutRes, SlimInjector\<DataType\>)
+* register(layoutRes, SlimInjector\<DataType\>)
+
+  Register a DataType to be associated with a layoutRes through a SlimInjector
  
-* use methed withDefault(layoutRes, SlimInjector)
+* registerDefault(layoutRes, SlimInjector)
+
+  Register a default layoutRes to all the DataType which has not registered by alone.
 
 ```java        
 
  SlimAdapter.create()
-                .with(R.layout.item_user, new SlimInjector<User>() {
+                .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     protected void onInject(User data, IViewInjector injector) {
                         ...// inject data into views
                     }
                 })
-                .with(R.layout.item_interger, new SlimInjector<Integer>() {
+                .register(R.layout.item_interger, new SlimInjector<Integer>() {
                     @Override
                     protected void onInject(Integer data, IViewInjector injector) {
                         ...// inject data into views
                     }
                 })
-                .with(R.layout.item_string, new SlimInjector<String>() {
+                .register(R.layout.item_string, new SlimInjector<String>() {
                     @Override
                     protected void onInject(String data, IViewInjector injector) {
                         ...// inject data into views
                     }
                 })
-                .withDefault(R.layout.item_string, new SlimInjector() {
+                .registerDefault(R.layout.item_string, new SlimInjector() {
                     @Override
                     protected void onInject(Object data, IViewInjector injector) {
                         ...// inject data into views
@@ -116,16 +120,16 @@ injector.text(R.id.name, data.getName())
 
 ```Kotlin
 SlimAdapter.create()
-                .with<String>(R.layout.item_string) { data, injector ->
+                .register<String>(R.layout.item_string) { data, injector ->
                     ...// inject data into views
                 }
-                .with<User>(R.layout.item_user) { data, injector ->
+                .register<User>(R.layout.item_user) { data, injector ->
                     ...// inject data into views
                 }
-                .with<Int>(R.layout.item_interger) { data, injector ->
+                .register<Int>(R.layout.item_interger) { data, injector ->
                     ...// inject data into views
                 }
-                .withDefault(R.layout.item_string) { data, injector ->
+                .registerDefault(R.layout.item_string) { data, injector ->
                     ...// inject data into views
                 }
                 .attachTo(recyclerView)

@@ -11,8 +11,9 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 # Features
 
 * No ViewHolder any more
-* fluent & simple API
-* multi-typeable adapter
+* Fluent & simple API
+* Multi-typeable adapter
+* Support kotlin
 
 # Setup
 ```java

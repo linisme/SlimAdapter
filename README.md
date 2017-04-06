@@ -39,25 +39,25 @@ compile 'net.idik:slimadapter:1.2.1'
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     protected void onInject(User data, IViewInjector injector) {
-                        ...// inject data into views
-                    }
+                        ...// inject data into views，step 2
+                    }
                 })
                 .register(R.layout.item_interger, new SlimInjector<Integer>() {
                     @Override
                     protected void onInject(Integer data, IViewInjector injector) {
-                        ...// inject data into views
+                        ...// inject data into views，step 2
                     }
                 })
                 .register(R.layout.item_string, new SlimInjector<String>() {
                     @Override
                     protected void onInject(String data, IViewInjector injector) {
-                        ...// inject data into views
+                        ...// inject data into views，step 2
                     }
                 })
                 .registerDefault(R.layout.item_string, new SlimInjector() {
                     @Override
                     protected void onInject(Object data, IViewInjector injector) {
-                        ...// inject data into views
+                        ...// inject data into views，step 2
                     }
                 })
                 .attachTo(recyclerView);

@@ -16,53 +16,119 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:1.0.0'
+compile 'net.idik:slimadapter:1.1.0'
 ```
 
 # Usages
+
+## Java
+
+#### Step 1: Create SlimAdapter & attachTo target RecyclerView
+
+* use methed with(layoutRes, SlimInjector\<DataType\>)
+ 
+* use methed withDefault(layoutRes, SlimInjector)
+
 ```java        
 
-SlimAdapter.create()
+ SlimAdapter.create()
                 .with(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     protected void onInject(User data, IViewInjector injector) {
-                        injector.text(R.id.name, data.getName())
-                                .text(R.id.age, String.valueOf(data.getAge()))
-                                .textColor(R.id.age, Color.RED)
-                                .textSize(R.id.age, 8);
+                        ...// inject data into views
                     }
                 })
                 .with(R.layout.item_interger, new SlimInjector<Integer>() {
                     @Override
                     protected void onInject(Integer data, IViewInjector injector) {
-                        injector.text(R.id.text, data.toString());
-
+                        ...// inject data into views
                     }
                 })
                 .with(R.layout.item_string, new SlimInjector<String>() {
                     @Override
                     protected void onInject(String data, IViewInjector injector) {
-                        injector.text(R.id.text, data);
+                        ...// inject data into views
                     }
                 })
                 .withDefault(R.layout.item_string, new SlimInjector() {
                     @Override
                     protected void onInject(Object data, IViewInjector injector) {
-                        injector.text(R.id.text, data.toString())
-                                .clicked(R.id.text, new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Toast.makeText(MainActivity.this, "DEFAULT INJECT", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-
+                        ...// inject data into views
                     }
                 })
-                .attachTo(recyclerView)
-                .setData(data)
-                .notifyDataSetChanged();
+                .attachTo(recyclerView);
     }
     
+```
+
+
+#### Step 2: Inject data into views with fluent apis
+
+```java
+injector.text(R.id.name, data.getName())
+        .text(R.id.age, String.valueOf(data.getAge()))
+        .textColor(R.id.age, Color.RED)
+        .textSize(R.id.age, 8)
+        .longClicked(R.id.name, new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        //do stuff...
+                                        return false;
+                                    }
+                                })
+        .clicked(R.id.text, new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        //do stuff...
+                                    }
+                                })
+        .with(R.id.name, new IViewInjector.Action<TextView>() {
+                                    @Override
+                                    public void action(TextView view) {
+                                        //do stuff...
+                                    }
+                                })
+        ...;
+```
+
+#### Step 3: Use SlimAdapter as normal adapter
+
+```Java
+    List<Object> data = new ArrayList<>();
+
+    {
+        data.add("hello");
+        data.add(",");
+        data.add(new User("iDIK", 27));
+        data.add("world");
+        data.add("!");
+        data.add(666666);
+        data.add(34234);
+        data.add(666669L);
+    }
+    
+    slimAdapter.setData(data).notifyDataSetChanged();
+    
+```
+
+
+## SlimAdapter 💗 Kotlim
+
+```Kotlin
+SlimAdapter.create()
+                .with<String>(R.layout.item_string) { data, injector ->
+                    ...// inject data into views
+                }
+                .with<User>(R.layout.item_user) { data, injector ->
+                    ...// inject data into views
+                }
+                .with<Int>(R.layout.item_interger) { data, injector ->
+                    ...// inject data into views
+                }
+                .withDefault(R.layout.item_string) { data, injector ->
+                    ...// inject data into views
+                }
+                .attachTo(recyclerView)
 ```
 
 

@@ -15,6 +15,7 @@ A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
 # Features
 
 * No ViewHolder any more
+* No Reflection
 * Fluent & simple API
 * Multi-typeable adapter
 * Support kotlin
@@ -121,7 +122,7 @@ injector.text(R.id.name, data.getName())
 ```
 
 
-## SlimAdapter 💗 Kotlim
+## SlimAdapter 💗 Kotlin
 
 ```Kotlin
 SlimAdapter.create()

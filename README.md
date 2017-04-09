@@ -10,7 +10,7 @@
 
 
 # SlimAdapter
-A slim &amp; clean &amp; typeable Adapter withoooooooout# VIEWHOLDER
+A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
 # Features
 
@@ -100,6 +100,10 @@ injector.text(R.id.name, data.getName())
                                 })
         ...;
 ```
+
+> Custom ViewInjecor?
+>
+> there are lots of methods about views as you know, i could not consider every single one to included it in the default view injector imp, you can extend the CustomViewInjector to match you needs, the docs & example is comming soon...
 
 #### Step 3: Use SlimAdapter as normal adapter
 

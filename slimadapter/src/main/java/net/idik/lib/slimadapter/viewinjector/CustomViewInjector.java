@@ -85,6 +85,36 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     }
 
     @Override
+    public CVI alpha(int id, float alpha) {
+        wrappedInjector.alpha(id, alpha);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI visible(int id, boolean condition) {
+        wrappedInjector.visible(id, condition);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI invisible(int id, boolean condition) {
+        wrappedInjector.invisible(id, condition);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI gone(int id, boolean condition) {
+        wrappedInjector.gone(id, condition);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI toggle(int id, boolean condition) {
+        wrappedInjector.toggle(id, condition);
+        return (CVI) this;
+    }
+
+    @Override
     public CVI gone(int id) {
         wrappedInjector.gone(id);
         return (CVI) this;
@@ -148,4 +178,5 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     public <T extends View> T findViewById(int id) {
         return (T) wrappedInjector.findViewById(id);
     }
+
 }

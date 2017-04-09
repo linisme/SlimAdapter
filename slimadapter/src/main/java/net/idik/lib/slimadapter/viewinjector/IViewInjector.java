@@ -26,6 +26,8 @@ public interface IViewInjector<VI extends IViewInjector> {
 
     VI textSize(int id, int sp);
 
+    VI alpha(int id, float alpha);
+
     VI image(int id, int res);
 
     VI image(int id, Drawable drawable);
@@ -36,9 +38,17 @@ public interface IViewInjector<VI extends IViewInjector> {
 
     VI visible(int id);
 
+    VI visible(int id, boolean condition);
+
     VI invisible(int id);
 
+    VI invisible(int id, boolean condition);
+
     VI gone(int id);
+
+    VI gone(int id, boolean condition);
+
+    VI toggle(int id, boolean condition);
 
     <V extends View> VI with(int id, Action<V> action);
 

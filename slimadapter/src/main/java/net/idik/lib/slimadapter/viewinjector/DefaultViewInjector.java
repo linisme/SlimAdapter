@@ -1,10 +1,12 @@
 package net.idik.lib.slimadapter.viewinjector;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -49,6 +51,20 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
         TextView view = findViewById(id);
         view.setText(charSequence);
         return this;
+    }
+
+    @Override
+    public DefaultViewInjector typeface(int id, Typeface typeface, int style) {
+        TextView view = findViewById(id);
+        view.setTypeface(typeface, style);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector typeface(int id, Typeface typeface) {
+        TextView view = findViewById(id);
+        view.setTypeface(typeface);
+        return null;
     }
 
     @Override
@@ -156,6 +172,12 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
+    public DefaultViewInjector enable(int id, boolean enable) {
+        findViewById(id).setEnabled(enable);
+        return this;
+    }
+
+    @Override
     public DefaultViewInjector enable(int id) {
         findViewById(id).setEnabled(true);
         return this;
@@ -171,6 +193,18 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     public DefaultViewInjector checked(int id, boolean checked) {
         Checkable view = findViewById(id);
         view.setChecked(checked);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector selected(int id, boolean selected) {
+        findViewById(id).setSelected(selected);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector pressed(int id, boolean pressed) {
+        findViewById(id).setPressed(pressed);
         return this;
     }
 
@@ -195,4 +229,33 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
         return this;
     }
 
+    @Override
+    public DefaultViewInjector addView(int id, View... views) {
+        ViewGroup viewGroup = findViewById(id);
+        for (View view : views) {
+            viewGroup.addView(view);
+        }
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector addView(int id, View view, ViewGroup.LayoutParams params) {
+        ViewGroup viewGroup = findViewById(id);
+        viewGroup.addView(view, params);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector removeAllViews(int id) {
+        ViewGroup viewGroup = findViewById(id);
+        viewGroup.removeAllViews();
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector removeView(int id, View view) {
+        ViewGroup viewGroup = findViewById(id);
+        viewGroup.removeView(view);
+        return this;
+    }
 }

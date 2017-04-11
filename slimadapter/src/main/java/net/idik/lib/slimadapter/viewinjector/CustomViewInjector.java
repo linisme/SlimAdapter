@@ -1,9 +1,11 @@
 package net.idik.lib.slimadapter.viewinjector;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 
 /**
@@ -33,6 +35,18 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     @Override
     public CVI text(int id, CharSequence charSequence) {
         wrappedInjector.text(id, charSequence);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI typeface(int id, Typeface typeface, int style) {
+        wrappedInjector.typeface(id, typeface, style);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI typeface(int id, Typeface typeface) {
+        wrappedInjector.typeface(id, typeface);
         return (CVI) this;
     }
 
@@ -121,6 +135,11 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     }
 
     @Override
+    public CVI enable(int id, boolean enable) {
+        return null;
+    }
+
+    @Override
     public CVI enable(int id) {
         wrappedInjector.enable(id);
         return (CVI) this;
@@ -145,6 +164,16 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     }
 
     @Override
+    public CVI selected(int id, boolean selected) {
+        return null;
+    }
+
+    @Override
+    public CVI pressed(int id, boolean pressed) {
+        return null;
+    }
+
+    @Override
     public CVI adapter(int id, Adapter adapter) {
         wrappedInjector.adapter(id, adapter);
         return (CVI) this;
@@ -153,6 +182,30 @@ public abstract class CustomViewInjector<CVI extends IViewInjector> implements I
     @Override
     public CVI layoutManager(int id, RecyclerView.LayoutManager layoutManager) {
         wrappedInjector.layoutManager(id, layoutManager);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI addView(int id, View... views) {
+        wrappedInjector.addView(id, views);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI addView(int id, View view, ViewGroup.LayoutParams params) {
+        wrappedInjector.addView(id, view, params);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI removeAllViews(int id) {
+        wrappedInjector.removeAllViews(id);
+        return (CVI) this;
+    }
+
+    @Override
+    public CVI removeView(int id, View view) {
+        wrappedInjector.removeView(id, view);
         return (CVI) this;
     }
 

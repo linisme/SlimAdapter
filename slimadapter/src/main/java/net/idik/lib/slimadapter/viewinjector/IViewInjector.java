@@ -1,8 +1,10 @@
 package net.idik.lib.slimadapter.viewinjector;
 
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
 
 /**
@@ -21,6 +23,10 @@ public interface IViewInjector<VI extends IViewInjector> {
     VI text(int id, int res);
 
     VI text(int id, CharSequence charSequence);
+
+    VI typeface(int id, Typeface typeface, int style);
+
+    VI typeface(int id, Typeface typeface);
 
     VI textColor(int id, int color);
 
@@ -50,15 +56,30 @@ public interface IViewInjector<VI extends IViewInjector> {
 
     VI longClicked(int id, View.OnLongClickListener listener);
 
+    VI enable(int id, boolean enable);
+
     VI enable(int id);
 
     VI disable(int id);
 
     VI checked(int id, boolean checked);
 
+    VI selected(int id, boolean selected);
+
+    VI pressed(int id, boolean pressed);
+
     VI adapter(int id, RecyclerView.Adapter adapter);
 
     VI adapter(int id, Adapter adapter);
 
     VI layoutManager(int id, RecyclerView.LayoutManager layoutManager);
+
+    ///COMMON VIEWGROUP
+    VI addView(int id, View... views);
+
+    VI addView(int id, View view, ViewGroup.LayoutParams params);
+
+    VI removeAllViews(int id);
+
+    VI removeView(int id, View view);
 }

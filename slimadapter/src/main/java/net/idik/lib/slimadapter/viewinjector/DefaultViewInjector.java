@@ -118,25 +118,10 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
         return this;
     }
 
-    @Override
-    public DefaultViewInjector visible(int id, boolean condition) {
-        if (condition) {
-            visible(id);
-        }
-        return this;
-    }
 
     @Override
     public DefaultViewInjector invisible(int id) {
         findViewById(id).setVisibility(View.INVISIBLE);
-        return this;
-    }
-
-    @Override
-    public DefaultViewInjector invisible(int id, boolean condition) {
-        if (condition) {
-            invisible(id);
-        }
         return this;
     }
 
@@ -147,21 +132,9 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
-    public DefaultViewInjector gone(int id, boolean condition) {
-        if (condition) {
-            gone(id);
-        }
-        return this;
-    }
-
-    @Override
-    public DefaultViewInjector toggle(int id, boolean condition) {
-        if (condition) {
-            visible(id);
-        } else {
-            gone(id);
-        }
-        return this;
+    public DefaultViewInjector visibility(int id, int visibility) {
+        findViewById(id).setVisibility(visibility);
+        return null;
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Checkable;
@@ -65,6 +66,20 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
+    public DefaultViewInjector alpha(int id, float alpha) {
+        View view = findViewById(id);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            view.setAlpha(alpha);
+        } else {
+            AlphaAnimation animation = new AlphaAnimation(alpha, alpha);
+            animation.setDuration(0);
+            animation.setFillAfter(true);
+            view.startAnimation(animation);
+        }
+        return this;
+    }
+
+    @Override
     public DefaultViewInjector image(int id, int res) {
         ImageView view = findViewById(id);
         view.setImageResource(res);
@@ -104,14 +119,48 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
+    public DefaultViewInjector visible(int id, boolean condition) {
+        if (condition) {
+            visible(id);
+        }
+        return this;
+    }
+
+    @Override
     public DefaultViewInjector invisible(int id) {
         findViewById(id).setVisibility(View.INVISIBLE);
         return this;
     }
 
     @Override
+    public DefaultViewInjector invisible(int id, boolean condition) {
+        if (condition) {
+            invisible(id);
+        }
+        return this;
+    }
+
+    @Override
     public DefaultViewInjector gone(int id) {
         findViewById(id).setVisibility(View.GONE);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector gone(int id, boolean condition) {
+        if (condition) {
+            gone(id);
+        }
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector toggle(int id, boolean condition) {
+        if (condition) {
+            visible(id);
+        } else {
+            gone(id);
+        }
         return this;
     }
 
@@ -172,6 +221,5 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
         view.setLayoutManager(layoutManager);
         return this;
     }
-
 
 }

@@ -5,7 +5,6 @@ import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,8 +88,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return this;
     }
 
-    public <T> SlimAdapter register(final int layoutRes, final SlimInjector<T> slimInjector) {
-        Type type = ((ParameterizedType) slimInjector.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0];
+    public <T> SlimAdapter register(final int layoutRes, Class<T> type, final SlimInjector<T> slimInjector) {
         creators.put(type, new IViewHolderCreator<T>() {
             @Override
             public SlimTypeViewHolder<T> create(ViewGroup parent) {

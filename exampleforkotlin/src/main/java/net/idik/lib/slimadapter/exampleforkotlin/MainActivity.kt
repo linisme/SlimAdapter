@@ -1,14 +1,12 @@
 package net.idik.lib.slimadapter.exampleforkotlin
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.IntegerRes
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.widget.Toast
 import net.idik.lib.slimadapter.SlimAdapter
-
-import java.util.ArrayList
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private val recyclerView: RecyclerView by lazy<RecyclerView> {
@@ -19,17 +17,17 @@ class MainActivity : AppCompatActivity() {
 
     private val adapter by lazy {
         SlimAdapter.create()
-                .register<String>(R.layout.item_string) { data, injector ->
+                .register<String>(R.layout.item_string, String::class.java) { data, injector ->
                     injector.text(R.id.text, data)
                 }
-                .register<User>(R.layout.item_user) { data, injector ->
+                .register<User>(R.layout.item_user, User::class.java) { data, injector ->
                     injector.text(R.id.name, data.name)
                             .text(R.id.age, data.age.toString())
                             .clicked(R.id.name) {
                                 Toast.makeText(this@MainActivity, "click user name", Toast.LENGTH_LONG).show()
                             }
                 }
-                .register<Int>(R.layout.item_interger) { data, injector ->
+                .register<Int>(R.layout.item_interger, Int::class.java) { data, injector ->
                     injector.text(R.id.text, data.toString())
                             .longClicked(R.id.text) {
                                 Toast.makeText(this@MainActivity, "longclick int", Toast.LENGTH_LONG).show()

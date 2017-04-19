@@ -1,5 +1,6 @@
 package net.idik.lib.slimadapter.example;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +23,32 @@ public class MainActivity extends AppCompatActivity {
 
     private static final List<Object> data = new ArrayList<>();
 
+    public static class Food<T> {
+        T food;
+
+        public Food(T food) {
+            this.food = food;
+        }
+    }
+
     static {
+        List<String> list = new ArrayList<>();
+        list.add("11111");
+        list.add("11111");
+        list.add("222222");
+
+        List<Integer> intList = new ArrayList<Integer>();
+        intList.add(1212);
+        intList.add(222);
+
         data.add("hello");
         data.add(",");
         data.add(new User("iDIK", 27));
         data.add("world");
         data.add("!");
         data.add(666666);
+        data.add(intList);
+        data.add(new Food("foodStr"));
         data.add(34234);
         data.add(666669L);
     }
@@ -47,6 +67,19 @@ public class MainActivity extends AppCompatActivity {
                                 .text(R.id.age, String.valueOf(data.getAge()))
                                 .textColor(R.id.age, Color.RED)
                                 .textSize(R.id.age, 8);
+                    }
+                })
+                .register(R.layout.item_string, new SlimInjector<Food>() {
+                    @Override
+                    public void onInject(Food data, IViewInjector injector) {
+                        injector.text(R.id.text, data.food.toString());
+                    }
+                })
+                .register(R.layout.item_string, new SlimInjector<List>() {
+
+                    @Override
+                    public void onInject(List data, IViewInjector injector) {
+                        injector.text(R.id.text, data.get(1).toString());
                     }
                 })
                 .register(R.layout.item_interger, new SlimInjector<Integer>() {

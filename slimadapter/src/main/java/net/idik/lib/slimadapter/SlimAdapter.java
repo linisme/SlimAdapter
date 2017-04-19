@@ -54,7 +54,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         IViewHolderCreator creator = creators.get(dataType);
         if (creator == null) {
             for (Type t : creators.keySet()) {
-                if (((Class) t).isAssignableFrom((Class) dataType)) {
+                if (isTypeMatch(t, dataType)) {
                     creator = creators.get(t);
                     break;
                 }
@@ -67,6 +67,32 @@ public class SlimAdapter extends AbstractSlimAdapter {
             creator = defaultCreator;
         }
         return creator.create(parent);
+    }
+
+    private boolean isTypeMatch(Type type, Type targetType) {
+        if (type instanceof Class && targetType instanceof Class) {
+            if (((Class) type).isAssignableFrom((Class) targetType)) {
+                return true;
+            }
+        } else if (type instanceof ParameterizedType && targetType instanceof ParameterizedType) {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            ParameterizedType parameterizedTargetType = (ParameterizedType) targetType;
+            if (isTypeMatch(parameterizedType.getRawType(), ((ParameterizedType) targetType).getRawType())) {
+                Type[] types = parameterizedType.getActualTypeArguments();
+                Type[] targetTypes = parameterizedTargetType.getActualTypeArguments();
+                if (types == null || targetTypes == null || types.length != targetTypes.length) {
+                    return false;
+                }
+                int len = types.length;
+                for (int i = 0; i < len; i++) {
+                    if (!isTypeMatch(types[i], targetTypes[i])) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public static SlimAdapter create() {
@@ -90,7 +116,10 @@ public class SlimAdapter extends AbstractSlimAdapter {
     }
 
     public <T> SlimAdapter register(final int layoutRes, final SlimInjector<T> slimInjector) {
-        Type type = ((ParameterizedType) slimInjector.getClass().getGenericInterfaces()[0]).getActualTypeArguments()[0];
+        Type type = getSlimInjectorActualTypeArguments(slimInjector);
+        if (type == null) {
+            throw new IllegalArgumentException();
+        }
         creators.put(type, new IViewHolderCreator<T>() {
             @Override
             public SlimTypeViewHolder<T> create(ViewGroup parent) {
@@ -105,13 +134,30 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return this;
     }
 
+    private <T> Type getSlimInjectorActualTypeArguments(SlimInjector<T> slimInjector) {
+        Type[] interfaces = slimInjector.getClass().getGenericInterfaces();
+        for (Type type : interfaces) {
+            if (type instanceof ParameterizedType) {
+                if (((ParameterizedType) type).getRawType().equals(SlimInjector.class)) {
+                    Type actualType = ((ParameterizedType) type).getActualTypeArguments()[0];
+                    if (actualType instanceof Class) {
+                        return actualType;
+                    } else {
+                        throw new IllegalArgumentException("The generic type argument of SlimInjector is NOT support Generic Parameterized Type now, Please using a WRAPPER class install of it directly.");
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     public SlimAdapter attachTo(RecyclerView recyclerView) {
         recyclerView.setAdapter(this);
         return this;
     }
 
     @Override
-    public final synchronized int getItemViewType(int position) {
+    public final int getItemViewType(int position) {
         Object item = getItem(position);
         int index = dataTypes.indexOf(item.getClass());
         if (index == -1) {

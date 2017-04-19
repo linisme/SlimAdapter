@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 4
-        versionName "1.2.1"
+        versionCode 5
+        versionName "1.2.2"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 
 group = 'net.idik'
-version = '1.2.1'
+version = '1.2.2'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,10 +47,10 @@ bintray {
         publish = true
 
         version {
-            name = "1.2.1"
-            desc = 'Change DataType register API: with -> register'
+            name = '1.2.2'
+            desc = 'Process with the unsupport generic type'
             released = new Date()
-            vcsTag = 'v1.2.1'
+            vcsTag = 'v1.2.2'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }

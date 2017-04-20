@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
 import net.idik.lib.slimadapter.SlimAdapter;
+import net.idik.lib.slimadapter.SlimDiffUtil;
 import net.idik.lib.slimadapter.SlimInjector;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
@@ -21,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     private static final List<Object> data = new ArrayList<>();
+    private static final List<Object> data1 = new ArrayList<>();
+
+    private List<Object> currentData = null;
 
     static {
         data.add(new SectionHeader("My Friends"));
@@ -42,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         data.add(new Music("Love story", R.drawable.icon3));
         data.add(new Music("Nothing's gonna change my love for u", R.drawable.icon4));
         data.add(new Music("Just one last dance", R.drawable.icon5));
+
+        data1.addAll(data);
+        data1.remove(1);
+        data1.remove(5);
+        data1.remove(6);
     }
 
     private SlimAdapter slimAdapter;
@@ -50,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        currentData = data;
 
         recyclerView = (RecyclerView) findViewById(R.id.recyler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -96,8 +109,37 @@ public class MainActivity extends AppCompatActivity {
                                 .image(R.id.cover, data.getCoverRes());
                     }
                 })
+                .setDiffCallback(new SlimDiffUtil.Callback() {
+                    @Override
+                    public boolean areItemsTheSame(Object oldItem, Object newItem) {
+                        return oldItem.equals(newItem);
+                    }
+
+                    @Override
+                    public boolean areContentsTheSame(Object oldItem, Object newItem) {
+                        return oldItem.equals(newItem);
+                    }
+                })
                 .attachTo(recyclerView);
 
-        slimAdapter.setData(data).notifyDataSetChanged();
+        slimAdapter.updateData(currentData);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_change_data:
+                currentData = currentData == data ? data1 : data;
+                slimAdapter.updateData(currentData);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package net.idik.lib.slimadapter;
 
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -23,8 +24,15 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     private List<?> data;
 
-    public SlimAdapter setData(List<?> data) {
-        this.data = data;
+    public SlimAdapter updateData(List<?> data) {
+        if (diffCallback == null) {
+            this.data = data;
+            notifyDataSetChanged();
+        } else {
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SlimDiffUtil(this.data, data, diffCallback));
+            this.data = data;
+            diffResult.dispatchUpdatesTo(this);
+        }
         return this;
     }
 
@@ -47,6 +55,13 @@ public class SlimAdapter extends AbstractSlimAdapter {
     private Map<Type, IViewHolderCreator> creators = new HashMap<>();
 
     private IViewHolderCreator defaultCreator = null;
+
+    private SlimDiffUtil.Callback diffCallback = null;
+
+    public SlimAdapter setDiffCallback(SlimDiffUtil.Callback diffCallback) {
+        this.diffCallback = diffCallback;
+        return this;
+    }
 
     @Override
     public final synchronized SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

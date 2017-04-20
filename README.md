@@ -25,10 +25,11 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 * Fluent & simple API
 * Multi-typeable adapter
 * Support kotlin
+* Support Simple DiffUtils
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:1.2.2'
+compile 'net.idik:slimadapter:1.3.0'
 ```
 
 # Usages
@@ -107,9 +108,6 @@ injector.text(R.id.name, data.getName())
         ...;
 ```
 
-> Custom ViewInjecor?
->
-> there are lots of methods about views as you know, i could not consider every single one to included it in the default view injector imp, you can extend the CustomViewInjector to match you needs, the docs & example is comming soon...
 
 #### Step 3: Use SlimAdapter as normal adapter
 
@@ -127,7 +125,7 @@ injector.text(R.id.name, data.getName())
         data.add(666669L);
     }
     
-    slimAdapter.setData(data).notifyDataSetChanged();
+    slimAdapter.updateData(data);
     
 ```
 

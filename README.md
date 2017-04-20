@@ -1,4 +1,4 @@
-# First At A Glance
+# First At A Glance :)
 
 ![SlimAdapter](./SlimAdapter.jpg)
 

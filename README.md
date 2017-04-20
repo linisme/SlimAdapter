@@ -1,3 +1,4 @@
+# First At A Glance
 
 ![SlimAdapter](./SlimAdapter.jpg)
 
@@ -14,6 +15,7 @@
 
 
 # SlimAdapter
+
 A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
 # Features

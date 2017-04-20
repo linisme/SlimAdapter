@@ -9,9 +9,12 @@
 ![SlimAdapter](./SlimAdapter.jpg)
 
 
-![logo](./slimadapter-logo.png)
 
 # Intro
+
+
+![logo](./slimadapter-logo.png)
+
 
 A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 

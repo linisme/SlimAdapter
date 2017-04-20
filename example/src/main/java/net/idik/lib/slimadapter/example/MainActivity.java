@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public boolean areContentsTheSame(Object oldItem, Object newItem) {
-                        return oldItem.equals(newItem);
+                        return true;
                     }
                 })
                 .attachTo(recyclerView);

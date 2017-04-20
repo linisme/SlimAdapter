@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 5
-        versionName "1.2.2"
+        versionCode 6
+        versionName "1.3.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 
 group = 'net.idik'
-version = '1.2.2'
+version = '1.3.0'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,10 +47,10 @@ bintray {
         publish = true
 
         version {
-            name = '1.2.2'
-            desc = 'Process with the unsupport generic type'
+            name = '1.3.0'
+            desc = 'New Feature: DiffUtil'
             released = new Date()
-            vcsTag = 'v1.2.2'
+            vcsTag = 'v1.3.0'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }

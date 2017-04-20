@@ -6,7 +6,7 @@
 
 # First At A Glance :)
 
-![SlimAdapter](./SlimAdapter.jpg)
+![SlimAdapter](https://raw.githubusercontent.com/MEiDIK/SlimAdapter/master/SlimAdapter.jpg)
 
 
 

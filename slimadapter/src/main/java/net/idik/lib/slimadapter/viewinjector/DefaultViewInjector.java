@@ -22,14 +22,18 @@ import net.idik.lib.slimadapter.SlimViewHolder;
  */
 public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
 
-    private SlimViewHolder viewHolder;
+    private final SlimViewHolder viewHolder;
 
-    public DefaultViewInjector(SlimViewHolder viewHolder) {
+    private final RecyclerView.Adapter recyclerViewAdapter;
+
+    public DefaultViewInjector(SlimViewHolder viewHolder, RecyclerView.Adapter recyclerViewAdapter) {
         this.viewHolder = viewHolder;
+        this.recyclerViewAdapter = recyclerViewAdapter;
     }
 
     @Override
     public final <T extends View> T findViewById(int id) {
+        //noinspection unchecked
         return (T) viewHolder.id(id);
     }
 
@@ -172,6 +176,18 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
+    public DefaultViewInjector clickedHolder(View.OnClickListener listener) {
+        viewHolder.itemView.setOnClickListener(listener);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector longClickedHolder(View.OnLongClickListener listener) {
+        viewHolder.itemView.setOnLongClickListener(listener);
+        return this;
+    }
+
+    @Override
     public DefaultViewInjector enable(int id, boolean enable) {
         findViewById(id).setEnabled(enable);
         return this;
@@ -256,6 +272,12 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     public DefaultViewInjector removeView(int id, View view) {
         ViewGroup viewGroup = findViewById(id);
         viewGroup.removeView(view);
+        return this;
+    }
+
+    @Override
+    public DefaultViewInjector notifyDataSetChanged() {
+        recyclerViewAdapter.notifyDataSetChanged();
         return this;
     }
 }

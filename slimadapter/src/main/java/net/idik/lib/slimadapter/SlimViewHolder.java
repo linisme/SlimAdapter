@@ -29,9 +29,9 @@ public abstract class SlimViewHolder<D> extends RecyclerView.ViewHolder {
         viewMap = new SparseArray<>();
     }
 
-    final void bind(D data) {
+    final void bind(D data, RecyclerView.Adapter adapter) {
         if (injector == null) {
-            injector = new DefaultViewInjector(this);
+            injector = new DefaultViewInjector(this, adapter);
         }
         onBind(data, injector);
     }

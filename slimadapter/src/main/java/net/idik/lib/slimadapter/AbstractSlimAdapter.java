@@ -10,7 +10,7 @@ abstract class AbstractSlimAdapter extends RecyclerView.Adapter<SlimViewHolder> 
 
     @Override
     public final void onBindViewHolder(SlimViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        holder.bind(getItem(position), this);
     }
 
     protected abstract Object getItem(int position);

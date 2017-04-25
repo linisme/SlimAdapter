@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .registerDefault(R.layout.item_string, new SlimInjector() {
                     @Override
-                    public void onInject(Object data, IViewInjector injector) {
+                    public void onInject(Object data, final IViewInjector injector) {
                         injector.text(R.id.text, data.toString())
                                 .longClicked(R.id.text, new View.OnLongClickListener() {
                                     @Override
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         Toast.makeText(MainActivity.this, "DEFAULT INJECT", Toast.LENGTH_LONG).show();
+                                        injector.notifyDataSetChanged();
                                     }
                                 });
 

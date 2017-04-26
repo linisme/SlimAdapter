@@ -176,13 +176,13 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     }
 
     @Override
-    public DefaultViewInjector clickedHolder(View.OnClickListener listener) {
+    public DefaultViewInjector clicked(View.OnClickListener listener) {
         viewHolder.itemView.setOnClickListener(listener);
         return this;
     }
 
     @Override
-    public DefaultViewInjector longClickedHolder(View.OnLongClickListener listener) {
+    public DefaultViewInjector longClicked(View.OnLongClickListener listener) {
         viewHolder.itemView.setOnLongClickListener(listener);
         return this;
     }

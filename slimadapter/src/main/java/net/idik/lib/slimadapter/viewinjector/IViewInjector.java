@@ -56,9 +56,9 @@ public interface IViewInjector<VI extends IViewInjector> {
 
     VI longClicked(int id, View.OnLongClickListener listener);
 
-    VI clickedHolder(View.OnClickListener listener);
+    VI clicked(View.OnClickListener listener);
 
-    VI longClickedHolder(View.OnLongClickListener listener);
+    VI longClicked(View.OnLongClickListener listener);
 
     VI enable(int id, boolean enable);
 

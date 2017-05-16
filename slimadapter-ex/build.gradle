@@ -67,8 +67,8 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'SlimAdapter-Ex'
-                description 'SlimAdapter EX Module'
+                name 'SlimAdapterEx'
+                description 'SlimAdapterEx Module'
                 url siteUrl
                 licenses {
                     license {

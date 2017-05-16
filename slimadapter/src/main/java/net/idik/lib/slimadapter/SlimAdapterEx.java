@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import net.idik.lib.slimadapter.diff.SlimDiffUtil;
 import net.idik.lib.slimadapter.ex.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
@@ -143,8 +144,13 @@ public class SlimAdapterEx extends SlimAdapter {
     }
 
     @Override
-    public SlimAdapterEx setDiffCallback(SlimDiffUtil.Callback diffCallback) {
-        return (SlimAdapterEx) super.setDiffCallback(diffCallback);
+    public SlimAdapterEx enableDiff() {
+        return (SlimAdapterEx) super.enableDiff();
+    }
+
+    @Override
+    public SlimAdapterEx enableDiff(SlimDiffUtil.Callback diffCallback) {
+        return (SlimAdapterEx) super.enableDiff(diffCallback);
     }
 
     @Override

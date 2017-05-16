@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 
 import net.idik.lib.slimadapter.SlimAdapter;
 import net.idik.lib.slimadapter.SlimAdapterEx;
-import net.idik.lib.slimadapter.SlimDiffUtil;
+import net.idik.lib.slimadapter.diff.SlimDiffUtil;
 import net.idik.lib.slimadapter.SlimInjector;
 import net.idik.lib.slimadapter.ex.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
@@ -112,17 +112,7 @@ public class MainActivity extends AppCompatActivity {
                                 .image(R.id.cover, data.getCoverRes());
                     }
                 })
-                .setDiffCallback(new SlimDiffUtil.Callback() {
-                    @Override
-                    public boolean areItemsTheSame(Object oldItem, Object newItem) {
-                        return oldItem.equals(newItem);
-                    }
-
-                    @Override
-                    public boolean areContentsTheSame(Object oldItem, Object newItem) {
-                        return true;
-                    }
-                })
+                .enableDiff()
                 .enableLoadMore(new SlimMoreLoader(this) {
                     @Override
                     protected void onLoadMore() {

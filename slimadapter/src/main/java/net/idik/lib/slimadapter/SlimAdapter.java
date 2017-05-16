@@ -1,6 +1,5 @@
 package net.idik.lib.slimadapter;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -8,6 +7,8 @@ import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import net.idik.lib.slimadapter.diff.DefaultDiffCallback;
+import net.idik.lib.slimadapter.diff.SlimDiffUtil;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.lang.reflect.ParameterizedType;
@@ -43,8 +44,6 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return null;
     }
 
-    private Context context;
-
     private List<?> data;
 
     private Handler uiHandler = new Handler(Looper.getMainLooper()) {
@@ -58,10 +57,6 @@ public class SlimAdapter extends AbstractSlimAdapter {
             super.dispatchMessage(msg);
         }
     };
-
-    protected Context getContext() {
-        return context;
-    }
 
     public SlimAdapter updateData(List<?> data) {
         if (diffCallback == null) {
@@ -107,7 +102,12 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     private SlimDiffUtil.Callback diffCallback = null;
 
-    public SlimAdapter setDiffCallback(SlimDiffUtil.Callback diffCallback) {
+    public SlimAdapter enableDiff() {
+        enableDiff(new DefaultDiffCallback());
+        return this;
+    }
+
+    public SlimAdapter enableDiff(SlimDiffUtil.Callback diffCallback) {
         this.diffCallback = diffCallback;
         return this;
     }

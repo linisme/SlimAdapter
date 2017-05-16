@@ -24,8 +24,13 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 * No Reflection
 * Fluent & simple API
 * Multi-typeable adapter
+* Easier DiffUtils
 * Support kotlin
-* Support Simple DiffUtils
+
+### Ex Features
+
+* Add Header & Footer Unlimitly
+* Easier to LoadMore
 
 # Setup
 ```java
@@ -36,7 +41,15 @@ compile 'net.idik:slimadapter:2.0.0'
 
 ## Java
 
-#### Step 1: Create SlimAdapter & attachTo target RecyclerView
+#### Step 0: Create SlimAdapter
+```java
+SlimAdapter.create() //For the core one
+
+SlimAdapter.create(SlimAdapterEx.class) //For the more function adapter, like addHeader, addFooter and auto loadMore...
+```
+
+
+#### Step 1: register data types & attachTo target RecyclerView
 
 * register(layoutRes, SlimInjector\<DataType\>)
 
@@ -128,6 +141,9 @@ injector.text(R.id.name, data.getName())
     slimAdapter.updateData(data);
     
 ```
+
+## About SlimAdapterEx
+
 
 
 ## SlimAdapter 💗 Kotlin

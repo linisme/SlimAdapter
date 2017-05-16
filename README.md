@@ -34,7 +34,10 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:2.0.0'
+compile 'net.idik:slimadapter:2.0.1'
+
+//Option:
+compile 'net.idik:slimadapter-ex:2.0.1' // Only Be Needed if u want more feature like loadMore, Header and so on...
 ```
 
 # Usages
@@ -143,6 +146,9 @@ injector.text(R.id.name, data.getName())
 ```
 
 ## About SlimAdapterEx
+
+SlimAdapter aims to be "Slim", not "Supper", so the SlimAdapter core lib is focus on wrapping the RecycleAdapter to provide a more friendly api.
+Anyway, Someone needs a more power Adpter, and this is the reason why SlimAdapterEx exsit. In a word, SlimAdapterEx is focus on providing some power feature in a slim way.
 
 
 

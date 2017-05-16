@@ -1,5 +1,9 @@
 package net.idik.lib.slimadapter;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -19,19 +23,64 @@ import java.util.Map;
 
 public class SlimAdapter extends AbstractSlimAdapter {
 
-    private SlimAdapter() {
+    private static final int WHAT_NOTIFY_DATA_SET_CHANGED = 1;
+
+    SlimAdapter() {
     }
 
+    public static SlimAdapter create() {
+        return new SlimAdapter();
+    }
+
+    public static <T extends SlimAdapter> T create(Class<T> clazz) {
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Context context;
+
     private List<?> data;
+
+    private Handler uiHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void dispatchMessage(Message msg) {
+            switch (msg.what) {
+                case WHAT_NOTIFY_DATA_SET_CHANGED:
+                    notifyDataSetChanged();
+                    break;
+            }
+            super.dispatchMessage(msg);
+        }
+    };
+
+    protected Context getContext() {
+        return context;
+    }
 
     public SlimAdapter updateData(List<?> data) {
         if (diffCallback == null) {
             this.data = data;
-            notifyDataSetChanged();
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                notifyDataSetChanged();
+            } else {
+                uiHandler.removeMessages(WHAT_NOTIFY_DATA_SET_CHANGED);
+                uiHandler.sendEmptyMessage(WHAT_NOTIFY_DATA_SET_CHANGED);
+            }
         } else {
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SlimDiffUtil(this.data, data, diffCallback));
             this.data = data;
-            diffResult.dispatchUpdatesTo(this);
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                diffResult.dispatchUpdatesTo(this);
+            } else {
+                uiHandler.removeMessages(WHAT_NOTIFY_DATA_SET_CHANGED);
+                uiHandler.sendEmptyMessage(WHAT_NOTIFY_DATA_SET_CHANGED);
+            }
         }
         return this;
     }
@@ -64,7 +113,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
     }
 
     @Override
-    public final synchronized SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Type dataType = dataTypes.get(viewType);
         IViewHolderCreator creator = creators.get(dataType);
         if (creator == null) {
@@ -110,9 +159,6 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return false;
     }
 
-    public static SlimAdapter create() {
-        return new SlimAdapter();
-    }
 
     public SlimAdapter registerDefault(final int layoutRes, final SlimInjector slimInjector) {
         defaultCreator = new IViewHolderCreator() {
@@ -172,7 +218,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
     }
 
     @Override
-    public final int getItemViewType(int position) {
+    public int getItemViewType(int position) {
         Object item = getItem(position);
         int index = dataTypes.indexOf(item.getClass());
         if (index == -1) {

@@ -2,6 +2,7 @@ package net.idik.lib.slimadapter.example;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +13,10 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import net.idik.lib.slimadapter.SlimAdapter;
+import net.idik.lib.slimadapter.SlimAdapterEx;
 import net.idik.lib.slimadapter.SlimDiffUtil;
 import net.idik.lib.slimadapter.SlimInjector;
+import net.idik.lib.slimadapter.ex.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        slimAdapter = SlimAdapter.create()
+        slimAdapter = SlimAdapter.create(SlimAdapterEx.class)
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     public void onInject(User data, IViewInjector injector) {
@@ -120,10 +123,27 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 })
+                .enableLoadMore(new SlimMoreLoader(this) {
+                    @Override
+                    protected void onLoadMore() {
+                        SystemClock.sleep(3_000L);
+                        List<Object> data = new ArrayList<>(slimAdapter.getData());
+                        data.addAll(data1);
+                        loadTime++;
+                        slimAdapter.updateData(data);
+                    }
+
+                    @Override
+                    protected boolean hasMore() {
+                        return loadTime < 3;
+                    }
+                })
                 .attachTo(recyclerView);
 
         slimAdapter.updateData(currentData);
     }
+
+    private int loadTime = 0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

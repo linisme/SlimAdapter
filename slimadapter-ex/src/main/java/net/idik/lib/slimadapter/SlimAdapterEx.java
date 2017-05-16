@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.diff.SlimDiffUtil;
-import net.idik.lib.slimadapter.ex.SlimMoreLoader;
+import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ public class SlimAdapterEx extends SlimAdapter {
     private SlimMoreLoader moreLoader;
 
     SlimAdapterEx() {
+        super();
         headerViews = new ArrayList<>();
         footerViews = new ArrayList<>();
     }

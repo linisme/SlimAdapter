@@ -39,7 +39,7 @@ bintray {
     key = properties.getProperty("bintray.apikey")
     pkg {
         repo = 'SlimAdapter'
-        name = 'SlimAdapter'
+        name = 'SlimAdapterEx'
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ['MIT']
@@ -57,14 +57,6 @@ bintray {
     configurations = ['archives']
 }
 
-dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-}
 repositories {
     mavenCentral()
 }
@@ -75,8 +67,8 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'SlimAdapter'
-                description 'A slim & clean & typeable Adapter without # VIEWHOLDER'
+                name 'SlimAdapter-Ex'
+                description 'SlimAdapter EX Module'
                 url siteUrl
                 licenses {
                     license {
@@ -120,4 +112,14 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    provided project(':slimadapter')
+    testCompile 'junit:junit:4.12'
 }

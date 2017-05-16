@@ -1,4 +1,4 @@
-package net.idik.lib.slimadapter.ex;
+package net.idik.lib.slimadapter.ex.loadmore;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

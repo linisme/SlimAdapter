@@ -13,10 +13,9 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import net.idik.lib.slimadapter.SlimAdapter;
-import net.idik.lib.slimadapter.SlimAdapterEx;
-import net.idik.lib.slimadapter.diff.SlimDiffUtil;
 import net.idik.lib.slimadapter.SlimInjector;
-import net.idik.lib.slimadapter.ex.SlimMoreLoader;
+import net.idik.lib.slimadapter.SlimAdapterEx;
+import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;

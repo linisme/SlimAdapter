@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://$PROJECT_DIR$/exampleforkotlin/exampleforkotlin.iml" filepath="$PROJECT_DIR$/exampleforkotlin/exampleforkotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/slimadapter/slimadapter.iml" filepath="$PROJECT_DIR$/slimadapter/slimadapter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/slimadapter-ex/slimadapter-ex.iml" filepath="$PROJECT_DIR$/slimadapter-ex/slimadapter-ex.iml" />
       <module fileurl="file://$PROJECT_DIR$/slimadapterlib/slimadapterlib.iml" filepath="$PROJECT_DIR$/slimadapterlib/slimadapterlib.iml" />
     </modules>
   </component>

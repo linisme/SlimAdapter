@@ -1,7 +1,6 @@
-package net.idik.lib.slimadapter.ex;
+package net.idik.lib.slimadapter.ex.loadmore;
 
 import android.content.Context;
-import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;

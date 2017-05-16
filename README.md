@@ -148,7 +148,10 @@ injector.text(R.id.name, data.getName())
 ## About SlimAdapterEx
 
 SlimAdapter aims to be "Slim", not "Supper", so the SlimAdapter core lib is focus on wrapping the RecycleAdapter to provide a more friendly api.
-Anyway, Someone needs a more power Adpter, and this is the reason why SlimAdapterEx exsit. In a word, SlimAdapterEx is focus on providing some power feature in a slim way.
+
+Anyway, Someone needs a more power Adpter, and this is the reason why SlimAdapterEx exsit. 
+
+In a word, SlimAdapterEx is focus on providing some power feature in a slim way.
 
 
 

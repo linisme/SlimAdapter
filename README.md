@@ -147,7 +147,7 @@ injector.text(R.id.name, data.getName())
 
 ## About SlimAdapterEx
 
-SlimAdapter aims to be "Slim", not "Supper", so the SlimAdapter core lib is focus on wrapping the RecycleAdapter to provide a more friendly api.
+SlimAdapter aims to be "Slim", not "Super", so the SlimAdapter core lib is focus on wrapping the RecycleAdapter to provide a more friendly api.
 
 Anyway, Someone needs a more power Adpter, and this is the reason why SlimAdapterEx exsit. 
 

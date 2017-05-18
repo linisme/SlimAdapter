@@ -212,8 +212,10 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return null;
     }
 
-    public SlimAdapter attachTo(RecyclerView recyclerView) {
-        recyclerView.setAdapter(this);
+    public SlimAdapter attachTo(RecyclerView... recyclerViews) {
+        for (RecyclerView recyclerView : recyclerViews) {
+            recyclerView.setAdapter(this);
+        }
         return this;
     }
 

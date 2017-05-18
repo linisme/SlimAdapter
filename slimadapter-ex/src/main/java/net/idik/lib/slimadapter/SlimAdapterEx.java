@@ -166,8 +166,8 @@ public class SlimAdapterEx extends SlimAdapter {
     }
 
     @Override
-    public SlimAdapterEx attachTo(RecyclerView recyclerView) {
-        return (SlimAdapterEx) super.attachTo(recyclerView);
+    public SlimAdapterEx attachTo(RecyclerView... recyclerViews) {
+        return (SlimAdapterEx) super.attachTo(recyclerViews);
     }
 
     private class SlimExViewHolder extends SlimViewHolder<Object> {

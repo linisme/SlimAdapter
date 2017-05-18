@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentData = data;
+        currentData = new ArrayList<>(data);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -115,12 +115,12 @@ public class MainActivity extends AppCompatActivity {
                 .enableDiff()
                 .enableLoadMore(new SlimMoreLoader(this) {
                     @Override
-                    protected void onLoadMore(LoadMoreHandler loadMoreHandler) {
+                    protected void onLoadMore(Handler handler) {
                         SystemClock.sleep(3_000L);
                         if (random.nextInt(10) > 7) {
-                            loadMoreHandler.error();
+                            handler.error();
                         } else {
-                            loadMoreHandler.loadCompleted(data1);
+                            handler.loadCompleted(data1);
                             loadTime++;
                         }
                     }

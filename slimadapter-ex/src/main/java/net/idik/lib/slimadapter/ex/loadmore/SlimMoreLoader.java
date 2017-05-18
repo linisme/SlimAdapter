@@ -1,7 +1,6 @@
 package net.idik.lib.slimadapter.ex.loadmore;
 
 import android.content.Context;
-import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,9 +26,9 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
     private Context context;
 
     private SlimAdapterEx slimAdapterEx;
-    private Handler eventHandler;
+    private android.os.Handler eventHandler;
 
-    private LoadMoreHandler loadMoreHandler;
+    private Handler handler;
 
 
     public SlimMoreLoader(Context context, ILoadMoreViewCreator creator) {
@@ -48,15 +47,15 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
     }
 
     private void initHandler() {
-        loadMoreHandler = new LoadMoreHandler();
+        handler = new Handler();
         HandlerThread eventHandlerThread = new HandlerThread(SlimMoreLoader.class.getSimpleName() + ".Thread");
         eventHandlerThread.start();
-        eventHandler = new Handler(eventHandlerThread.getLooper(), new Handler.Callback() {
+        eventHandler = new android.os.Handler(eventHandlerThread.getLooper(), new android.os.Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
                 switch (msg.what) {
                     case WHAT_LOAD_MORE:
-                        onLoadMore(loadMoreHandler);
+                        onLoadMore(handler);
                         return true;
                     default:
                         return false;
@@ -72,7 +71,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         return loadMoreView;
     }
 
-    protected abstract void onLoadMore(LoadMoreHandler loadMoreHandler);
+    protected abstract void onLoadMore(Handler handler);
 
     protected abstract boolean hasMore();
 
@@ -112,9 +111,9 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         }
     }
 
-    protected final class LoadMoreHandler {
+    protected final class Handler {
 
-        LoadMoreHandler() {
+        Handler() {
         }
 
         public void loadCompleted(List<?> data) {

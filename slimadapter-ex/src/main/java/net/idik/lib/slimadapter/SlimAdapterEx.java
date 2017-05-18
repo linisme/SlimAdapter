@@ -91,10 +91,10 @@ public class SlimAdapterEx extends SlimAdapter {
             return TYPE_EX - position;
         } else {
             position -= headerViews.size();
-            if (position < getData().size()) {
+            if (position < super.getItemCount()) {
                 return super.getItemViewType(position);
             } else {
-                position -= getData().size();
+                position -= super.getItemCount();
                 if (position < footerViews.size()) {
                     return TYPE_EX - position - headerViews.size();
                 } else {
@@ -131,10 +131,10 @@ public class SlimAdapterEx extends SlimAdapter {
             return headerViews.get(position);
         } else {
             position -= headerViews.size();
-            if (position < getData().size()) {
+            if (position < super.getItemCount()) {
                 return super.getItem(position);
             } else {
-                position -= getData().size();
+                position -= super.getItemCount();
                 if (position < footerViews.size()) {
                     return footerViews.get(position);
                 } else {

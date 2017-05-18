@@ -146,7 +146,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         View createErrorView();
     }
 
-    public static class SimpleLoadMoreViewCreator implements ILoadMoreViewCreator {
+    private static class SimpleLoadMoreViewCreator implements ILoadMoreViewCreator {
 
         private final static int PADDING = 24;
         private SlimMoreLoader loader;

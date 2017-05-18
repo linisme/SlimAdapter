@@ -10,20 +10,27 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import net.idik.lib.slimadapter.SlimAdapterEx;
+
+import java.util.List;
+
 /**
  * Created by linshuaibin on 16/05/2017.
  */
 
 public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
+    private static final int WHAT_LOAD_MORE = 1;
 
     private SlimLoadMoreView loadMoreView;
     private boolean loading;
     private ILoadMoreViewCreator loadMoreViewCreator;
     private Context context;
 
+    private SlimAdapterEx slimAdapterEx;
     private Handler eventHandler;
 
-    private static final int WHAT_LOAD_MORE = 1;
+    private LoadMoreHandler loadMoreHandler;
+
 
     public SlimMoreLoader(Context context, ILoadMoreViewCreator creator) {
         this.context = context;
@@ -32,10 +39,16 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
     }
 
     public SlimMoreLoader(Context context) {
-        this(context, new DefaultLoadMoreViewCreator(context));
+        this(context, null);
+        this.loadMoreViewCreator = new SimpleLoadMoreViewCreator(context, this);
+    }
+
+    public void setSlimAdapterEx(SlimAdapterEx slimAdapterEx) {
+        this.slimAdapterEx = slimAdapterEx;
     }
 
     private void initHandler() {
+        loadMoreHandler = new LoadMoreHandler();
         HandlerThread eventHandlerThread = new HandlerThread(SlimMoreLoader.class.getSimpleName() + ".Thread");
         eventHandlerThread.start();
         eventHandler = new Handler(eventHandlerThread.getLooper(), new Handler.Callback() {
@@ -43,7 +56,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
             public boolean handleMessage(Message msg) {
                 switch (msg.what) {
                     case WHAT_LOAD_MORE:
-                        onLoadMore();
+                        onLoadMore(loadMoreHandler);
                         return true;
                     default:
                         return false;
@@ -59,7 +72,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         return loadMoreView;
     }
 
-    protected abstract void onLoadMore();
+    protected abstract void onLoadMore(LoadMoreHandler loadMoreHandler);
 
     protected abstract boolean hasMore();
 
@@ -99,22 +112,56 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         }
     }
 
+    protected final class LoadMoreHandler {
+
+        LoadMoreHandler() {
+        }
+
+        public void loadCompleted(List<?> data) {
+            if (data == null) {
+                reset();
+                return;
+            }
+            List currentData = slimAdapterEx.getData();
+            if (currentData == null) {
+                currentData = data;
+            } else {
+                currentData.addAll(data);
+            }
+            slimAdapterEx.updateData(currentData);
+        }
+
+        public void error() {
+            loading = false;
+            getLoadMoreView().visibleErrorView();
+        }
+    }
+
     public interface ILoadMoreViewCreator {
         View createLoadingView();
 
         View createNoMoreView();
 
         View createPullToLoadMoreView();
+
+        View createErrorView();
     }
 
-    public static class DefaultLoadMoreViewCreator implements ILoadMoreViewCreator {
+    public static class SimpleLoadMoreViewCreator implements ILoadMoreViewCreator {
 
         private final static int PADDING = 24;
+        private SlimMoreLoader loader;
+
 
         private Context context;
 
-        public DefaultLoadMoreViewCreator(Context context) {
+        public SimpleLoadMoreViewCreator(Context context, SlimMoreLoader loader) {
             this.context = context;
+            this.loader = loader;
+        }
+
+        protected void reload() {
+            loader.loadMore();
         }
 
         @Override
@@ -141,6 +188,21 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
             textView.setGravity(Gravity.CENTER);
             textView.setPadding(PADDING, PADDING, PADDING, PADDING);
             textView.setText("Pull to load more...");
+            return textView;
+        }
+
+        @Override
+        public View createErrorView() {
+            TextView textView = new TextView(context);
+            textView.setGravity(Gravity.CENTER);
+            textView.setPadding(PADDING, PADDING, PADDING, PADDING);
+            textView.setText("Error...Click to reload");
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    reload();
+                }
+            });
             return textView;
         }
     }

@@ -43,6 +43,7 @@ public class SlimAdapterEx extends SlimAdapter {
 
     public SlimAdapterEx enableLoadMore(SlimMoreLoader slimMoreLoader) {
         this.moreLoader = slimMoreLoader;
+        slimMoreLoader.setSlimAdapterEx(this);
         notifyDataSetChanged();
         return this;
     }

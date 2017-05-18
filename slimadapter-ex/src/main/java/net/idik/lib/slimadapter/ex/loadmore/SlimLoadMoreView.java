@@ -14,14 +14,23 @@ public class SlimLoadMoreView extends FrameLayout {
     private View loadingView;
     private View pullToLoadMoreView;
     private View noMoreView;
+    private View errorView;
 
     public SlimLoadMoreView(@NonNull Context context, SlimMoreLoader.ILoadMoreViewCreator creator) {
         super(context);
         setLoadingView(creator.createLoadingView());
         setNoMoreView(creator.createNoMoreView());
         setPullToLoadMoreView(creator.createPullToLoadMoreView());
+        setErrorView(creator.createErrorView());
     }
 
+    public void setErrorView(View errorView) {
+        if (this.errorView != null) {
+            removeView(this.errorView);
+        }
+        this.errorView = errorView;
+        addView(errorView);
+    }
 
     public void setLoadingView(View loadingView) {
         if (this.loadingView != null) {
@@ -54,6 +63,7 @@ public class SlimLoadMoreView extends FrameLayout {
                 loadingView.setVisibility(VISIBLE);
                 noMoreView.setVisibility(GONE);
                 pullToLoadMoreView.setVisibility(GONE);
+                errorView.setVisibility(GONE);
             }
         });
     }
@@ -65,6 +75,7 @@ public class SlimLoadMoreView extends FrameLayout {
                 loadingView.setVisibility(GONE);
                 noMoreView.setVisibility(GONE);
                 pullToLoadMoreView.setVisibility(VISIBLE);
+                errorView.setVisibility(GONE);
             }
         });
     }
@@ -76,6 +87,19 @@ public class SlimLoadMoreView extends FrameLayout {
                 loadingView.setVisibility(GONE);
                 noMoreView.setVisibility(VISIBLE);
                 pullToLoadMoreView.setVisibility(GONE);
+                errorView.setVisibility(GONE);
+            }
+        });
+    }
+
+    public void visibleErrorView() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                loadingView.setVisibility(GONE);
+                noMoreView.setVisibility(GONE);
+                pullToLoadMoreView.setVisibility(GONE);
+                errorView.setVisibility(VISIBLE);
             }
         });
     }

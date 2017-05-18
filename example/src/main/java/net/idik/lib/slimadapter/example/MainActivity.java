@@ -20,6 +20,7 @@ import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -114,12 +115,14 @@ public class MainActivity extends AppCompatActivity {
                 .enableDiff()
                 .enableLoadMore(new SlimMoreLoader(this) {
                     @Override
-                    protected void onLoadMore() {
+                    protected void onLoadMore(LoadMoreHandler loadMoreHandler) {
                         SystemClock.sleep(3_000L);
-                        List<Object> data = new ArrayList<>(slimAdapter.getData());
-                        data.addAll(data1);
-                        loadTime++;
-                        slimAdapter.updateData(data);
+                        if (random.nextInt(10) > 7) {
+                            loadMoreHandler.error();
+                        } else {
+                            loadMoreHandler.loadCompleted(data1);
+                            loadTime++;
+                        }
                     }
 
                     @Override
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         slimAdapter.updateData(currentData);
     }
 
+    private Random random = new Random(System.currentTimeMillis());
     private int loadTime = 0;
 
     @Override
@@ -144,7 +148,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_data:
-                currentData = currentData == data ? data1 : data;
+                loadTime = 0;
+                currentData = currentData == data ? new ArrayList<>(data1) : new ArrayList<>(data);
                 slimAdapter.updateData(currentData);
                 return true;
             default:

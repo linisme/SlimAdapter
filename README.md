@@ -34,11 +34,8 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:2.0.3'
+compile 'net.idik:slimadapter:2.0.4'
 
-//Option:
-compile 'net.idik:slimadapter-ex:2.0.3' // Only Be Needed if u want more feature like loadMore, Header and so on...
-```
 
 # Usages
 
@@ -48,7 +45,7 @@ compile 'net.idik:slimadapter-ex:2.0.3' // Only Be Needed if u want more feature
 ```java
 SlimAdapter.create() //For the core one
 
-SlimAdapter.create(SlimAdapterEx.class) //For the more function adapter, like addHeader, addFooter and auto loadMore...
+SlimAdapter.createEx() //For the more function adapter, like addHeader, addFooter and auto loadMore...
 ```
 
 

@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 11
-        versionName "2.0.4"
+        versionCode 12
+        versionName "2.0.5"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 
 group = 'net.idik'
-version = '2.0.4'
+version = '2.0.5'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,10 +47,10 @@ bintray {
         publish = true
 
         version {
-            name = '2.0.4'
+            name = '2.0.5'
             desc = 'New Feature: SlimAdapterEx'
             released = new Date()
-            vcsTag = 'v2.0.4'
+            vcsTag = 'v2.0.5'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }

@@ -32,10 +32,11 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 * Add Header & Footer Unlimitly
 * Easier to LoadMore
 
+
 # Setup
 ```java
 compile 'net.idik:slimadapter:2.0.4'
-
+```
 
 # Usages
 

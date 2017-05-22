@@ -78,8 +78,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         switch (newState) {
             case RecyclerView.SCROLL_STATE_IDLE:
                 int last = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-                int total = recyclerView.getLayoutManager().getItemCount();
-                if (last + 1 == total && !loading) {
+                if (slimAdapterEx.getItem(last) == this && !loading) {
                     loadMore();
                 }
                 break;
@@ -118,13 +117,15 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
                 reset();
                 return;
             }
-            List currentData = slimAdapterEx.getData();
-            if (currentData == null) {
-                currentData = data;
-            } else {
-                currentData.addAll(data);
+            if (loading) {
+                List currentData = slimAdapterEx.getData();
+                if (currentData == null) {
+                    currentData = data;
+                } else {
+                    currentData.addAll(data);
+                }
+                slimAdapterEx.updateData(currentData);
             }
-            slimAdapterEx.updateData(currentData);
         }
 
         public void error() {

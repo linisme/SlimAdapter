@@ -63,7 +63,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
     };
 
     public SlimAdapter updateData(List<?> data) {
-        if (diffCallback == null) {
+        if (diffCallback == null || getItemCount() == 0 || data == null || data.size() == 0) {
             this.data = data;
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 notifyDataSetChanged();
@@ -225,7 +225,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        Object item = getItem(position);
+        Object item = data.get(position);
         int index = dataTypes.indexOf(item.getClass());
         if (index == -1) {
             dataTypes.add(item.getClass());

@@ -24,18 +24,19 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 * No Reflection
 * Fluent & simple API
 * Multi-typeable adapter
-* Easier DiffUtils
+* Auto DiffUtils
 * Support kotlin
 
 ### Ex Features
 
 * Add Header & Footer Unlimitly
-* Easier to LoadMore
+* Auto LoadMore
+* Auto emptyState with emptyView
 
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:2.0.4'
+compile 'net.idik:slimadapter:2.0.5'
 ```
 
 # Usages

@@ -1,20 +1,20 @@
-# First At A Glance
-
-![SlimAdapter](./SlimAdapter.jpg)
-
-![logo](./slimadapter-logo.png)
-
-
-
 [ ![Download](https://api.bintray.com/packages/idik-net/SlimAdapter/SlimAdapter/images/download.svg) ](https://bintray.com/idik-net/SlimAdapter/SlimAdapter/_latestVersion)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/MEiDIK/SlimAdapter/master/LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Android-green.svg)](http://developer.android.com/index.html)
 
 
 
+# First At A Glance :)
+
+![SlimAdapter](https://raw.githubusercontent.com/MEiDIK/SlimAdapter/master/SlimAdapter.jpg)
 
 
-# SlimAdapter
+
+# Intro
+
+
+![logo](./slimadapter-logo.png)
+
 
 A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
@@ -131,14 +131,25 @@ injector.text(R.id.name, data.getName())
     List<Object> data = new ArrayList<>();
 
     {
-        data.add("hello");
-        data.add(",");
-        data.add(new User("iDIK", 27));
-        data.add("world");
-        data.add("!");
-        data.add(666666);
-        data.add(34234);
-        data.add(666669L);
+        data.add(new SectionHeader("My Friends"));
+        data.add(new User("Jack", 21, R.drawable.icon1, "123456789XX"));
+        data.add(new User("Marry", 17, R.drawable.icon2, "123456789XX"));
+        data.add(new SectionHeader("My Images"));
+        data.add(new Image(R.drawable.cover1));
+        data.add(new Image(R.drawable.cover2));
+        data.add(new Image(R.drawable.cover3));
+        data.add(new Image(R.drawable.cover4));
+        data.add(new Image(R.drawable.cover5));
+        data.add(new Image(R.drawable.cover6));
+        data.add(new Image(R.drawable.cover7));
+        data.add(new Image(R.drawable.cover8));
+        data.add(new Image(R.drawable.cover9));
+        data.add(new Image(R.drawable.cover10));
+        data.add(new Image(R.drawable.cover11));
+        data.add(new SectionHeader("My Musics"));
+        data.add(new Music("Love story", R.drawable.icon3));
+        data.add(new Music("Nothing's gonna change my love for u", R.drawable.icon4));
+        data.add(new Music("Just one last dance", R.drawable.icon5));
     }
     
     slimAdapter.updateData(data);

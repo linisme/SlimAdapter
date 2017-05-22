@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        slimAdapter = SlimAdapter.create(SlimAdapterEx.class)
+        slimAdapter = SlimAdapter.createEx()
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     public void onInject(User data, IViewInjector injector) {

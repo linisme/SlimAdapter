@@ -23,13 +23,13 @@ public class SlimAdapterEx extends SlimAdapter {
 
     private SlimMoreLoader moreLoader;
 
-    SlimAdapterEx() {
+    protected SlimAdapterEx() {
         super();
         headerViews = new ArrayList<>();
         footerViews = new ArrayList<>();
     }
 
-    public SlimAdapterEx addHeader(View view) {
+    public SlimAdapterEx addHeaderView(View view) {
         headerViews.add(view);
         notifyDataSetChanged();
         return this;

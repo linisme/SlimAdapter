@@ -26,11 +26,15 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     private static final int WHAT_NOTIFY_DATA_SET_CHANGED = 1;
 
-    SlimAdapter() {
+    protected SlimAdapter() {
     }
 
     public static SlimAdapter create() {
         return new SlimAdapter();
+    }
+
+    public static SlimAdapterEx createEx() {
+        return new SlimAdapterEx();
     }
 
     public static <T extends SlimAdapter> T create(Class<T> clazz) {

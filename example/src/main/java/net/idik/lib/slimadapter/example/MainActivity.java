@@ -8,7 +8,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide;
 import net.idik.lib.slimadapter.SlimAdapter;
 import net.idik.lib.slimadapter.SlimInjector;
 import net.idik.lib.slimadapter.SlimAdapterEx;
+import net.idik.lib.slimadapter.ex.loadmore.SimpleLoadMoreViewCreator;
 import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .enableDiff()
-                .enableLoadMore(new SlimMoreLoader(this) {
+                .enableLoadMore(new SlimMoreLoader(this, new SimpleLoadMoreViewCreator(this).setNoMoreHint("没有更多数据了...")) {
                     @Override
                     protected void onLoadMore(Handler handler) {
                         SystemClock.sleep(3_000L);

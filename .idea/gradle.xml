@@ -11,7 +11,6 @@
             <option value="$PROJECT_DIR$/example" />
             <option value="$PROJECT_DIR$/exampleforkotlin" />
             <option value="$PROJECT_DIR$/slimadapter" />
-            <option value="$PROJECT_DIR$/slimadapter-ex" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

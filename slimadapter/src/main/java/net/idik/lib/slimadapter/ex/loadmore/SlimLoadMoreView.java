@@ -16,7 +16,7 @@ public class SlimLoadMoreView extends FrameLayout {
     private View noMoreView;
     private View errorView;
 
-    public SlimLoadMoreView(@NonNull Context context, SlimMoreLoader.ILoadMoreViewCreator creator) {
+    public SlimLoadMoreView(@NonNull Context context, LoadMoreViewCreator creator) {
         super(context);
         setLoadingView(creator.createLoadingView());
         setNoMoreView(creator.createNoMoreView());

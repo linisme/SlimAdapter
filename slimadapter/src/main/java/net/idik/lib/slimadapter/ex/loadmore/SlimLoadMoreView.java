@@ -3,6 +3,7 @@ package net.idik.lib.slimadapter.ex.loadmore;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 /**
@@ -18,6 +19,7 @@ public class SlimLoadMoreView extends FrameLayout {
 
     public SlimLoadMoreView(@NonNull Context context, LoadMoreViewCreator creator) {
         super(context);
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         setLoadingView(creator.createLoadingView());
         setNoMoreView(creator.createNoMoreView());
         setPullToLoadMoreView(creator.createPullToLoadMoreView());

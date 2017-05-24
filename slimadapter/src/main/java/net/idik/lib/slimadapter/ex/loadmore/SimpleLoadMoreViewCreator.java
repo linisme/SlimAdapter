@@ -19,7 +19,7 @@ public class SimpleLoadMoreViewCreator extends LoadMoreViewCreator {
     private CharSequence errorHint = "Error# Click to retry...";
     private int padding = 24;
 
-    private ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    private ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
     public SimpleLoadMoreViewCreator(Context context) {
         this.context = context;

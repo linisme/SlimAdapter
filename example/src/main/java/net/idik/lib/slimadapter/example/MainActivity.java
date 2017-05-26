@@ -2,22 +2,27 @@ package net.idik.lib.slimadapter.example;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import net.idik.lib.slimadapter.SlimAdapter;
-import net.idik.lib.slimadapter.SlimDiffUtil;
 import net.idik.lib.slimadapter.SlimInjector;
+import net.idik.lib.slimadapter.SlimAdapterEx;
+import net.idik.lib.slimadapter.ex.loadmore.SimpleLoadMoreViewCreator;
+import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
         data.add(new Music("Nothing's gonna change my love for u", R.drawable.icon4));
         data.add(new Music("Just one last dance", R.drawable.icon5));
 
-        data1.addAll(data);
-        data1.remove(1);
-        data1.remove(5);
-        data1.remove(6);
+//        data1.addAll(data);
+//        data1.remove(1);
+//        data1.remove(5);
+//        data1.remove(6);
     }
 
     private SlimAdapter slimAdapter;
@@ -74,7 +79,12 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        slimAdapter = SlimAdapter.create()
+        slimAdapter = SlimAdapter.createEx()
+                .addHeaderView(this, R.layout.header_data)
+                .addHeaderView(this, R.layout.header_data)
+                .addHeaderView(this, R.layout.header_data)
+                .addFooterView(this, R.layout.footer_data)
+                .addFooterView(this, R.layout.footer_data)
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     public void onInject(User data, IViewInjector injector) {
@@ -109,21 +119,32 @@ public class MainActivity extends AppCompatActivity {
                                 .image(R.id.cover, data.getCoverRes());
                     }
                 })
-                .setDiffCallback(new SlimDiffUtil.Callback() {
+                .enableDiff()
+                .enableLoadMore(new SlimMoreLoader(this, new SimpleLoadMoreViewCreator(this).setNoMoreHint("没有更多数据了...")) {
                     @Override
-                    public boolean areItemsTheSame(Object oldItem, Object newItem) {
-                        return oldItem.equals(newItem);
+                    protected void onLoadMore(Handler handler) {
+                        SystemClock.sleep(3_000L);
+                        if (random.nextInt(10) > 7) {
+                            handler.error();
+                        } else {
+                            handler.loadCompleted(data);
+                            loadTime++;
+                        }
                     }
 
                     @Override
-                    public boolean areContentsTheSame(Object oldItem, Object newItem) {
-                        return true;
+                    protected boolean hasMore() {
+                        return loadTime < 3;
                     }
                 })
+                .enableEmptyView(this, R.layout.empty_data)
                 .attachTo(recyclerView);
 
         slimAdapter.updateData(currentData);
     }
+
+    private Random random = new Random(System.currentTimeMillis());
+    private int loadTime = 0;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_change_data:
+                loadTime = 0;
                 currentData = currentData == data ? data1 : data;
                 slimAdapter.updateData(currentData);
                 return true;

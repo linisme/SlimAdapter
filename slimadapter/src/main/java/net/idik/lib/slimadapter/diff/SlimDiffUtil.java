@@ -1,4 +1,4 @@
-package net.idik.lib.slimadapter;
+package net.idik.lib.slimadapter.diff;
 
 import android.support.v7.util.DiffUtil;
 

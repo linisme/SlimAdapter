@@ -1,9 +1,14 @@
 package net.idik.lib.slimadapter;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import net.idik.lib.slimadapter.diff.DefaultDiffCallback;
+import net.idik.lib.slimadapter.diff.SlimDiffUtil;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.lang.reflect.ParameterizedType;
@@ -19,19 +24,62 @@ import java.util.Map;
 
 public class SlimAdapter extends AbstractSlimAdapter {
 
-    private SlimAdapter() {
+    private static final int WHAT_NOTIFY_DATA_SET_CHANGED = 1;
+
+    protected SlimAdapter() {
+    }
+
+    public static SlimAdapter create() {
+        return new SlimAdapter();
+    }
+
+    public static SlimAdapterEx createEx() {
+        return new SlimAdapterEx();
+    }
+
+    public static <T extends SlimAdapter> T create(Class<T> clazz) {
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private List<?> data;
 
+    private Handler uiHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void dispatchMessage(Message msg) {
+            switch (msg.what) {
+                case WHAT_NOTIFY_DATA_SET_CHANGED:
+                    notifyDataSetChanged();
+                    break;
+            }
+            super.dispatchMessage(msg);
+        }
+    };
+
     public SlimAdapter updateData(List<?> data) {
-        if (diffCallback == null) {
+        if (diffCallback == null || getItemCount() == 0 || data == null || data.size() == 0) {
             this.data = data;
-            notifyDataSetChanged();
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                notifyDataSetChanged();
+            } else {
+                uiHandler.removeMessages(WHAT_NOTIFY_DATA_SET_CHANGED);
+                uiHandler.sendEmptyMessage(WHAT_NOTIFY_DATA_SET_CHANGED);
+            }
         } else {
             DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new SlimDiffUtil(this.data, data, diffCallback));
             this.data = data;
-            diffResult.dispatchUpdatesTo(this);
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                diffResult.dispatchUpdatesTo(this);
+            } else {
+                uiHandler.removeMessages(WHAT_NOTIFY_DATA_SET_CHANGED);
+                uiHandler.sendEmptyMessage(WHAT_NOTIFY_DATA_SET_CHANGED);
+            }
         }
         return this;
     }
@@ -58,13 +106,18 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     private SlimDiffUtil.Callback diffCallback = null;
 
-    public SlimAdapter setDiffCallback(SlimDiffUtil.Callback diffCallback) {
+    public SlimAdapter enableDiff() {
+        enableDiff(new DefaultDiffCallback());
+        return this;
+    }
+
+    public SlimAdapter enableDiff(SlimDiffUtil.Callback diffCallback) {
         this.diffCallback = diffCallback;
         return this;
     }
 
     @Override
-    public final synchronized SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Type dataType = dataTypes.get(viewType);
         IViewHolderCreator creator = creators.get(dataType);
         if (creator == null) {
@@ -110,9 +163,6 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return false;
     }
 
-    public static SlimAdapter create() {
-        return new SlimAdapter();
-    }
 
     public SlimAdapter registerDefault(final int layoutRes, final SlimInjector slimInjector) {
         defaultCreator = new IViewHolderCreator() {
@@ -166,14 +216,16 @@ public class SlimAdapter extends AbstractSlimAdapter {
         return null;
     }
 
-    public SlimAdapter attachTo(RecyclerView recyclerView) {
-        recyclerView.setAdapter(this);
+    public SlimAdapter attachTo(RecyclerView... recyclerViews) {
+        for (RecyclerView recyclerView : recyclerViews) {
+            recyclerView.setAdapter(this);
+        }
         return this;
     }
 
     @Override
-    public final int getItemViewType(int position) {
-        Object item = getItem(position);
+    public int getItemViewType(int position) {
+        Object item = data.get(position);
         int index = dataTypes.indexOf(item.getClass());
         if (index == -1) {
             dataTypes.add(item.getClass());

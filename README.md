@@ -36,7 +36,7 @@ A slim &amp; clean &amp; typeable Adapter without# VIEWHOLDER
 
 # Setup
 ```java
-compile 'net.idik:slimadapter:2.0.6'
+compile 'net.idik:slimadapter:2.0.7'
 ```
 
 # Usages

@@ -64,7 +64,7 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     public DefaultViewInjector typeface(int id, Typeface typeface) {
         TextView view = findViewById(id);
         view.setTypeface(typeface);
-        return null;
+        return this;
     }
 
     @Override
@@ -150,7 +150,7 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     @Override
     public DefaultViewInjector visibility(int id, int visibility) {
         findViewById(id).setVisibility(visibility);
-        return null;
+        return this;
     }
 
     @Override

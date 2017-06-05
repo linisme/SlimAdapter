@@ -79,12 +79,12 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        slimAdapter = SlimAdapter.createEx()
-                .addHeaderView(this, R.layout.header_data)
-                .addHeaderView(this, R.layout.header_data)
-                .addHeaderView(this, R.layout.header_data)
-                .addFooterView(this, R.layout.footer_data)
-                .addFooterView(this, R.layout.footer_data)
+        slimAdapter = SlimAdapter.create()
+                .addHeader(this, R.layout.header_data)
+                .addHeader(this, R.layout.header_data)
+                .addHeader(this, R.layout.header_data)
+                .addFooter(this, R.layout.footer_data)
+                .addFooter(this, R.layout.footer_data)
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     public void onInject(User data, IViewInjector injector) {

@@ -29,11 +29,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
     protected SlimAdapter() {
     }
 
-    public static SlimAdapter create() {
-        return new SlimAdapter();
-    }
-
-    public static SlimAdapterEx createEx() {
+    public static SlimAdapterEx create() {
         return new SlimAdapterEx();
     }
 

@@ -21,8 +21,8 @@ public class SlimAdapterEx extends SlimAdapter {
     private final static int TYPE_EX = -100;
     private final static int TYPE_EMPTY = -90;
 
-    private List<View> headerViews;
-    private List<View> footerViews;
+    private List<SlimExViewHolder> headerItems;
+    private List<SlimExViewHolder> footerItems;
 
     private SlimMoreLoader moreLoader;
 
@@ -31,32 +31,32 @@ public class SlimAdapterEx extends SlimAdapter {
 
     protected SlimAdapterEx() {
         super();
-        headerViews = new ArrayList<>();
-        footerViews = new ArrayList<>();
+        headerItems = new ArrayList<>();
+        footerItems = new ArrayList<>();
     }
 
-    public SlimAdapterEx addHeaderView(View view) {
+    public SlimAdapterEx addHeader(View view) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(params);
-        headerViews.add(view);
+        headerItems.add(new SlimExViewHolder(view));
         notifyDataSetChanged();
         return this;
     }
 
-    public SlimAdapterEx addFooterView(View view) {
+    public SlimAdapterEx addFooter(View view) {
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(params);
-        footerViews.add(view);
+        footerItems.add(new SlimExViewHolder(view));
         notifyDataSetChanged();
         return this;
     }
 
-    public SlimAdapterEx addHeaderView(Context context, int layoutRes) {
-        return addHeaderView(LayoutInflater.from(context).inflate(layoutRes, null));
+    public SlimAdapterEx addHeader(Context context, int layoutRes) {
+        return addHeader(LayoutInflater.from(context).inflate(layoutRes, null));
     }
 
-    public SlimAdapterEx addFooterView(Context context, int layoutRes) {
-        return addFooterView(LayoutInflater.from(context).inflate(layoutRes, null));
+    public SlimAdapterEx addFooter(Context context, int layoutRes) {
+        return addFooter(LayoutInflater.from(context).inflate(layoutRes, null));
     }
 
     public SlimAdapterEx enableEmptyView(Context context, int layoutRes) {
@@ -78,12 +78,12 @@ public class SlimAdapterEx extends SlimAdapter {
     }
 
     private Object getExItem(int position) {
-        if (position < headerViews.size()) {
-            return headerViews.get(position);
+        if (position < headerItems.size()) {
+            return headerItems.get(position);
         } else {
-            position -= headerViews.size();
-            if (position < footerViews.size()) {
-                return footerViews.get(position);
+            position -= headerItems.size();
+            if (position < footerItems.size()) {
+                return footerItems.get(position);
             } else {
                 return moreLoader;
             }
@@ -120,18 +120,18 @@ public class SlimAdapterEx extends SlimAdapter {
         if (super.getItemCount() == 0 && emptyView != null) {
             return TYPE_EMPTY;
         }
-        if (position < headerViews.size()) {
+        if (position < headerItems.size()) {
             return TYPE_EX - position;
         } else {
-            position -= headerViews.size();
+            position -= headerItems.size();
             if (position < super.getItemCount()) {
                 return super.getItemViewType(position);
             } else {
                 position -= super.getItemCount();
-                if (position < footerViews.size()) {
-                    return TYPE_EX - position - headerViews.size();
+                if (position < footerItems.size()) {
+                    return TYPE_EX - position - headerItems.size();
                 } else {
-                    return TYPE_EX - headerViews.size() - footerViews.size();
+                    return TYPE_EX - headerItems.size() - footerItems.size();
                 }
             }
         }
@@ -147,7 +147,7 @@ public class SlimAdapterEx extends SlimAdapter {
             if (item instanceof SlimMoreLoader) {
                 viewHolder = new SlimExLoadMoreViewHolder(((SlimMoreLoader) item).getLoadMoreView());
             } else {
-                viewHolder = new SlimExViewHolder((View) item);
+                viewHolder = (SlimViewHolder) item;
             }
         } else {
             viewHolder = super.onCreateViewHolder(parent, viewType);
@@ -160,7 +160,7 @@ public class SlimAdapterEx extends SlimAdapter {
         if (super.getItemCount() == 0 && emptyView != null) {
             return 1;
         }
-        return footerViews.size() + headerViews.size() + super.getItemCount() + (moreLoader == null ? 0 : 1);
+        return footerItems.size() + headerItems.size() + super.getItemCount() + (moreLoader == null ? 0 : 1);
     }
 
     @Override
@@ -168,16 +168,16 @@ public class SlimAdapterEx extends SlimAdapter {
         if (super.getItemCount() == 0 && this.emptyView != null && position == 0) {
             return emptyView;
         }
-        if (position < headerViews.size()) {
-            return headerViews.get(position);
+        if (position < headerItems.size()) {
+            return headerItems.get(position);
         } else {
-            position -= headerViews.size();
+            position -= headerItems.size();
             if (position < super.getItemCount()) {
                 return super.getItem(position);
             } else {
                 position -= super.getItemCount();
-                if (position < footerViews.size()) {
-                    return footerViews.get(position);
+                if (position < footerItems.size()) {
+                    return footerItems.get(position);
                 } else {
                     return moreLoader;
                 }

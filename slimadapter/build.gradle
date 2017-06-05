@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-        versionCode 14
-        versionName "2.0.7"
+        versionCode 15
+        versionName "2.1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,7 +26,7 @@ android {
 }
 
 group = 'net.idik'
-version = '2.0.7'
+version = '2.1.0'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -47,10 +47,10 @@ bintray {
         publish = true
 
         version {
-            name = '2.0.7'
+            name = '2.1.0'
             desc = 'New Feature: SlimAdapterEx'
             released = new Date()
-            vcsTag = 'v2.0.7'
+            vcsTag = 'v2.1.0'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }
@@ -64,8 +64,8 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+//    compile 'com.android.support:support-fragment:25.3.1'
     provided 'com.google.code.findbugs:jsr305:3.0.2'
-
 }
 repositories {
     mavenCentral()

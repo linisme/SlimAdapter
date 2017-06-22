@@ -6,7 +6,7 @@ import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import net.idik.lib.slimadapter.SlimAdapterEx;
+import net.idik.lib.slimadapter.SlimAdapter;
 
 import java.util.List;
 
@@ -22,13 +22,13 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
     private LoadMoreViewCreator loadMoreViewCreator;
     private Context context;
 
-    private SlimAdapterEx slimAdapterEx;
+    private SlimAdapter slimAdapter;
     private android.os.Handler eventHandler;
 
     private Handler handler;
 
 
-    public SlimMoreLoader(Context context, LoadMoreViewCreator creator) {
+    protected SlimMoreLoader(Context context, LoadMoreViewCreator creator) {
         this.context = context;
         this.loadMoreViewCreator = creator;
         this.loadMoreViewCreator.attachLoader(this);
@@ -39,8 +39,8 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         this(context, new SimpleLoadMoreViewCreator(context));
     }
 
-    public void setSlimAdapterEx(SlimAdapterEx slimAdapterEx) {
-        this.slimAdapterEx = slimAdapterEx;
+    public void setSlimAdapter(SlimAdapter slimAdapter) {
+        this.slimAdapter = slimAdapter;
     }
 
     private void initHandler() {
@@ -78,7 +78,7 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         switch (newState) {
             case RecyclerView.SCROLL_STATE_IDLE:
                 int last = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
-                if (slimAdapterEx.getItem(last) == this && !loading) {
+                if (slimAdapter.getItem(last) == this && !loading) {
                     loadMore();
                 }
                 break;
@@ -118,13 +118,13 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
                 return;
             }
             if (loading) {
-                List currentData = slimAdapterEx.getData();
+                List currentData = slimAdapter.getData();
                 if (currentData == null) {
                     currentData = data;
                 } else {
                     currentData.addAll(data);
                 }
-                slimAdapterEx.updateData(currentData);
+                slimAdapter.updateData(currentData);
             }
         }
 

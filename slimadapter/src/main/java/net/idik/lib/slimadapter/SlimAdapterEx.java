@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.diff.SlimDiffUtil;
+import net.idik.lib.slimadapter.ex.loadmore.SlimExLoadMoreViewHolder;
 import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
@@ -24,7 +25,6 @@ public class SlimAdapterEx extends SlimAdapter {
     private List<SlimExViewHolder> headerItems;
     private List<SlimExViewHolder> footerItems;
 
-    private SlimMoreLoader moreLoader;
 
     private View emptyView;
 
@@ -70,12 +70,6 @@ public class SlimAdapterEx extends SlimAdapter {
         return this;
     }
 
-    public SlimAdapterEx enableLoadMore(SlimMoreLoader slimMoreLoader) {
-        this.moreLoader = slimMoreLoader;
-        slimMoreLoader.setSlimAdapterEx(this);
-        notifyDataSetChanged();
-        return this;
-    }
 
     private Object getExItem(int position) {
         if (position < headerItems.size()) {
@@ -84,40 +78,17 @@ public class SlimAdapterEx extends SlimAdapter {
             position -= headerItems.size();
             if (position < footerItems.size()) {
                 return footerItems.get(position);
-            } else {
-                return moreLoader;
+//            } else {
+//                return moreLoader;
             }
         }
+        return null;
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        if (moreLoader != null) {
-            recyclerView.addOnScrollListener(moreLoader);
-        }
-    }
-
-    @Override
-    public SlimAdapterEx updateData(List<?> data) {
-        if (moreLoader != null) {
-            moreLoader.reset();
-        }
-        super.updateData(data);
-        return this;
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        if (moreLoader != null) {
-            recyclerView.removeOnScrollListener(moreLoader);
-        }
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
 
     @Override
     public int getItemViewType(int position) {
-        if (super.getItemCount() == 0 && emptyView != null) {
+        if (emptyView != null && (super.getData() == null || super.getData().size() == 0)) {
             return TYPE_EMPTY;
         }
         if (position < headerItems.size()) {
@@ -144,11 +115,7 @@ public class SlimAdapterEx extends SlimAdapter {
             viewHolder = new SlimExViewHolder(emptyView);
         } else if (viewType <= TYPE_EX) {
             Object item = getExItem(TYPE_EX - viewType);
-            if (item instanceof SlimMoreLoader) {
-                viewHolder = new SlimExLoadMoreViewHolder(((SlimMoreLoader) item).getLoadMoreView());
-            } else {
-                viewHolder = (SlimViewHolder) item;
-            }
+            viewHolder = (SlimViewHolder) item;
         } else {
             viewHolder = super.onCreateViewHolder(parent, viewType);
         }
@@ -157,15 +124,15 @@ public class SlimAdapterEx extends SlimAdapter {
 
     @Override
     public int getItemCount() {
-        if (super.getItemCount() == 0 && emptyView != null) {
+        if (emptyView != null && (getData() == null || getData().size() == 0)) {
             return 1;
         }
-        return footerItems.size() + headerItems.size() + super.getItemCount() + (moreLoader == null ? 0 : 1);
+        return footerItems.size() + headerItems.size() + super.getItemCount();
     }
 
     @Override
     public Object getItem(int position) {
-        if (super.getItemCount() == 0 && this.emptyView != null && position == 0) {
+        if (emptyView != null && (getData() == null || getData().size() == 0) && position == 0) {
             return emptyView;
         }
         if (position < headerItems.size()) {
@@ -179,7 +146,7 @@ public class SlimAdapterEx extends SlimAdapter {
                 if (position < footerItems.size()) {
                     return footerItems.get(position);
                 } else {
-                    return moreLoader;
+                    return null;
                 }
             }
         }
@@ -223,14 +190,4 @@ public class SlimAdapterEx extends SlimAdapter {
         }
     }
 
-    private class SlimExLoadMoreViewHolder extends SlimViewHolder<SlimMoreLoader> {
-
-        public SlimExLoadMoreViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        @Override
-        protected void onBind(SlimMoreLoader data, IViewInjector injector) {
-        }
-    }
 }

@@ -10,6 +10,8 @@ import net.idik.lib.slimadapter.SlimAdapter;
 
 import java.util.List;
 
+import static android.support.v7.widget.RecyclerView.NO_POSITION;
+
 /**
  * Created by linshuaibin on 16/05/2017.
  */
@@ -78,6 +80,9 @@ public abstract class SlimMoreLoader extends RecyclerView.OnScrollListener {
         switch (newState) {
             case RecyclerView.SCROLL_STATE_IDLE:
                 int last = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+                if (NO_POSITION == last) {
+                    break;
+                }
                 if (slimAdapter.getItem(last) == this && !loading) {
                     loadMore();
                 }

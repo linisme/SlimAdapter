@@ -140,7 +140,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         }
         if (creator == null) {
             if (defaultCreator == null) {
-                throw new IllegalArgumentException("Neither the TYPE not The DEFAULT injector found...");
+                throw new IllegalArgumentException(String.format("Neither the TYPE: %s not The DEFAULT injector found...", dataType));
             }
             creator = defaultCreator;
         }

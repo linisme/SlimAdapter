@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
@@ -54,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
         data.add(new Music("Nothing's gonna change my love for u", R.drawable.icon4));
         data.add(new Music("Just one last dance", R.drawable.icon5));
 
-//        data1.addAll(data);
-//        data1.remove(1);
-//        data1.remove(5);
-//        data1.remove(6);
+        data1.addAll(data);
+        data1.remove(1);
+        data1.remove(5);
+        data1.remove(6);
     }
 
     private SlimAdapter slimAdapter;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        currentData = data;
+        currentData = new ArrayList<>(data);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
@@ -79,12 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        slimAdapter = SlimAdapter.createEx()
-                .addHeaderView(this, R.layout.header_data)
-                .addHeaderView(this, R.layout.header_data)
-                .addHeaderView(this, R.layout.header_data)
-                .addFooterView(this, R.layout.footer_data)
-                .addFooterView(this, R.layout.footer_data)
+        slimAdapter = SlimAdapter.create()
                 .register(R.layout.item_user, new SlimInjector<User>() {
                     @Override
                     public void onInject(User data, IViewInjector injector) {
@@ -127,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         if (random.nextInt(10) > 7) {
                             handler.error();
                         } else {
-                            handler.loadCompleted(data);
+                            handler.loadCompleted(data1);
                             loadTime++;
                         }
                     }
@@ -137,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
                         return loadTime < 3;
                     }
                 })
-                .enableEmptyView(this, R.layout.empty_data)
                 .attachTo(recyclerView);
 
         slimAdapter.updateData(currentData);
@@ -157,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_change_data:
                 loadTime = 0;
-                currentData = currentData == data ? data1 : data;
+                currentData = currentData == data ? new ArrayList<>(data1) : new ArrayList<>(data);
                 slimAdapter.updateData(currentData);
                 return true;
             default:

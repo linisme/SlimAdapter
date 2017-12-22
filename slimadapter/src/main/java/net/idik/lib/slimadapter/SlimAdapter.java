@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.diff.DefaultDiffCallback;
 import net.idik.lib.slimadapter.diff.SlimDiffUtil;
+import net.idik.lib.slimadapter.ex.loadmore.SlimExLoadMoreViewHolder;
+import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.lang.reflect.ParameterizedType;
@@ -25,16 +27,15 @@ import java.util.Map;
 public class SlimAdapter extends AbstractSlimAdapter {
 
     private static final int WHAT_NOTIFY_DATA_SET_CHANGED = 1;
+    private final static int TYPE_LOAD_MORE = -10;
+
+    private SlimMoreLoader moreLoader;
 
     protected SlimAdapter() {
     }
 
     public static SlimAdapter create() {
         return new SlimAdapter();
-    }
-
-    public static SlimAdapterEx createEx() {
-        return new SlimAdapterEx();
     }
 
     public static <T extends SlimAdapter> T create(Class<T> clazz) {
@@ -63,6 +64,9 @@ public class SlimAdapter extends AbstractSlimAdapter {
     };
 
     public SlimAdapter updateData(List<?> data) {
+        if (moreLoader != null) {
+            moreLoader.reset();
+        }
         if (diffCallback == null || getItemCount() == 0 || data == null || data.size() == 0) {
             this.data = data;
             if (Looper.myLooper() == Looper.getMainLooper()) {
@@ -90,12 +94,15 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        if (moreLoader != null && position == data.size()) {
+            return moreLoader;
+        }
+        return data == null || data.size() <= position ? null : data.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.size();
+        return data == null ? 0 : data.size() + (moreLoader == null ? 0 : 1);
     }
 
     private List<Type> dataTypes = new ArrayList<>();
@@ -118,6 +125,9 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     @Override
     public SlimViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_LOAD_MORE) {
+            return new SlimExLoadMoreViewHolder(moreLoader.getLoadMoreView());
+        }
         Type dataType = dataTypes.get(viewType);
         IViewHolderCreator creator = creators.get(dataType);
         if (creator == null) {
@@ -130,7 +140,7 @@ public class SlimAdapter extends AbstractSlimAdapter {
         }
         if (creator == null) {
             if (defaultCreator == null) {
-                throw new IllegalArgumentException("Neither the TYPE not The DEFAULT injector found...");
+                throw new IllegalArgumentException(String.format("Neither the TYPE: %s not The DEFAULT injector found...", dataType));
             }
             creator = defaultCreator;
         }
@@ -225,6 +235,9 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     @Override
     public int getItemViewType(int position) {
+        if (moreLoader != null && position == data.size()) {
+            return TYPE_LOAD_MORE;
+        }
         Object item = data.get(position);
         int index = dataTypes.indexOf(item.getClass());
         if (index == -1) {
@@ -236,6 +249,29 @@ public class SlimAdapter extends AbstractSlimAdapter {
 
     private interface IViewHolderCreator<T> {
         SlimAdapter.SlimTypeViewHolder<T> create(ViewGroup parent);
+    }
+
+    public SlimAdapter enableLoadMore(SlimMoreLoader slimMoreLoader) {
+        this.moreLoader = slimMoreLoader;
+        slimMoreLoader.setSlimAdapter(this);
+        notifyDataSetChanged();
+        return this;
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        if (moreLoader != null) {
+            recyclerView.addOnScrollListener(moreLoader);
+        }
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        if (moreLoader != null) {
+            recyclerView.removeOnScrollListener(moreLoader);
+        }
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 
     private static abstract class SlimTypeViewHolder<T> extends SlimViewHolder<T> {

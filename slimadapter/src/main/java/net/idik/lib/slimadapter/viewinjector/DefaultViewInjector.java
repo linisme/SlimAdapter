@@ -3,6 +3,7 @@ package net.idik.lib.slimadapter.viewinjector;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
@@ -199,6 +200,13 @@ public class DefaultViewInjector implements IViewInjector<DefaultViewInjector> {
     @Override
     public DefaultViewInjector selected(int id, boolean selected) {
         findViewById(id).setSelected(selected);
+        return this;
+    }
+
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
+    @Override
+    public DefaultViewInjector activated(int id, boolean activated) {
+        findViewById(id).setSelected(activated);
         return this;
     }
 

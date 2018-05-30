@@ -2,6 +2,8 @@ package net.idik.lib.slimadapter.viewinjector;
 
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +67,9 @@ public interface IViewInjector<VI extends IViewInjector> {
     VI checked(int id, boolean checked);
 
     VI selected(int id, boolean selected);
+
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
+    VI activated(int id, boolean activated);
 
     VI pressed(int id, boolean pressed);
 

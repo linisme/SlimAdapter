@@ -1,14 +1,12 @@
 package net.idik.lib.slimadapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.diff.SlimDiffUtil;
-import net.idik.lib.slimadapter.ex.loadmore.SlimExLoadMoreViewHolder;
-import net.idik.lib.slimadapter.ex.loadmore.SlimMoreLoader;
 import net.idik.lib.slimadapter.viewinjector.IViewInjector;
 
 import java.util.ArrayList;

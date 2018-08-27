@@ -3,14 +3,14 @@ package net.idik.lib.slimadapter.ex.loadmore;
 import android.content.Context;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import net.idik.lib.slimadapter.SlimAdapter;
 
 import java.util.List;
 
-import static android.support.v7.widget.RecyclerView.NO_POSITION;
+import static androidx.recyclerview.widget.RecyclerView.NO_POSITION;
 
 /**
  * Created by linshuaibin on 16/05/2017.

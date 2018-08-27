@@ -1,6 +1,6 @@
 package net.idik.lib.slimadapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by linshuaibin on 22/12/2016.

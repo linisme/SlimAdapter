@@ -17,11 +17,11 @@ public abstract class LoadMoreViewCreator {
         loader.loadMore();
     }
 
-    abstract View createLoadingView();
+    protected abstract View createLoadingView();
 
-    abstract View createNoMoreView();
+    protected abstract View createNoMoreView();
 
-    abstract View createPullToLoadMoreView();
+    protected abstract View createPullToLoadMoreView();
 
-    abstract View createErrorView();
+    protected abstract View createErrorView();
 }

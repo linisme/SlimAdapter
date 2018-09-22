@@ -1,10 +1,10 @@
 package net.idik.lib.slimadapter.exampleforkotlin
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.annotation.IntegerRes
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.annotation.IntegerRes
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.Toast
 import net.idik.lib.slimadapter.SlimAdapter
 

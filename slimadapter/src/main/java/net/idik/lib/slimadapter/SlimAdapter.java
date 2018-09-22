@@ -3,8 +3,8 @@ package net.idik.lib.slimadapter;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import net.idik.lib.slimadapter.diff.DefaultDiffCallback;
